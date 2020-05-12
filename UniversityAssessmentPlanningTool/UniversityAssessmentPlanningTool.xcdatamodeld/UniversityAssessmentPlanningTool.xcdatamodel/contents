@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Event" representedClassName="Event" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Assessment" representedClassName="Assessment" syncable="YES" codeGenerationType="class">
+        <attribute name="assessmentName" attributeType="String"/>
+        <attribute name="asssessmentDueDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="asssessmentDueReminder" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="asssessmentLevel" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="asssessmentMarkAwarded" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="asssessmentModuleName" attributeType="String"/>
+        <attribute name="asssessmentNotes" optional="YES" attributeType="String"/>
+        <attribute name="asssessmentValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Event" representedClassName="Event" syncable="YES" codeGenerationType="class">
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="Task" representedClassName="Task" parentEntity="Assessment" syncable="YES" codeGenerationType="class">
+        <attribute name="taskDueDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="taskDueReminder" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="taskEndDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="taskName" attributeType="String"/>
+        <attribute name="taskNotes" attributeType="String"/>
+        <attribute name="taskStartDate" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <elements>
-        <element name="Event" positionX="261" positionY="189" width="128" height="60"/>
+        <element name="Assessment" positionX="270" positionY="207" width="128" height="163"/>
+        <element name="Task" positionX="270.47265625" positionY="456.23828125" width="128" height="133"/>
+        <element name="Event" positionX="494.30078125" positionY="241.1953125" width="128" height="58"/>
     </elements>
 </model>
