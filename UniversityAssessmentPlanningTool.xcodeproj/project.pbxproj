@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14A40A31246C267D00D272AB /* DateFormatter+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A40A30246C267D00D272AB /* DateFormatter+Styling.swift */; };
+		14A40A3A246C38C100D272AB /* MyCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A40A39246C38C100D272AB /* MyCustomTableViewCell.swift */; };
+		14A40A3C246C6C7000D272AB /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A40A3B246C6C7000D272AB /* UIViewController+Alerts.swift */; };
 		14A7B1A92469EC3A007FDD85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A7B1A82469EC3A007FDD85 /* AppDelegate.swift */; };
 		14A7B1AC2469EC3A007FDD85 /* UniversityAssessmentPlanningTool.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 14A7B1AA2469EC3A007FDD85 /* UniversityAssessmentPlanningTool.xcdatamodeld */; };
 		14A7B1AE2469EC3A007FDD85 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A7B1AD2469EC3A007FDD85 /* SceneDelegate.swift */; };
@@ -19,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14A40A30246C267D00D272AB /* DateFormatter+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Styling.swift"; sourceTree = "<group>"; };
+		14A40A39246C38C100D272AB /* MyCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCustomTableViewCell.swift; sourceTree = "<group>"; };
+		14A40A3B246C6C7000D272AB /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		14A7B1A52469EC3A007FDD85 /* UniversityAssessmentPlanningTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniversityAssessmentPlanningTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14A7B1A82469EC3A007FDD85 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14A7B1AB2469EC3A007FDD85 /* UniversityAssessmentPlanningTool.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UniversityAssessmentPlanningTool.xcdatamodel; sourceTree = "<group>"; };
@@ -43,6 +49,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14A40A2F246C25AA00D272AB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				14A40A30246C267D00D272AB /* DateFormatter+Styling.swift */,
+				14A40A3B246C6C7000D272AB /* UIViewController+Alerts.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		14A40A36246C383400D272AB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				14A40A39246C38C100D272AB /* MyCustomTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		14A7B19C2469EC3A007FDD85 = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +85,8 @@
 		14A7B1A72469EC3A007FDD85 /* UniversityAssessmentPlanningTool */ = {
 			isa = PBXGroup;
 			children = (
+				14A40A36246C383400D272AB /* Views */,
+				14A40A2F246C25AA00D272AB /* Extensions */,
 				14A7B1C1246B326C007FDD85 /* Controllers */,
 				14A7B1A82469EC3A007FDD85 /* AppDelegate.swift */,
 				14A7B1AD2469EC3A007FDD85 /* SceneDelegate.swift */,
@@ -156,10 +181,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				14A7B1B02469EC3A007FDD85 /* MasterViewController.swift in Sources */,
+				14A40A31246C267D00D272AB /* DateFormatter+Styling.swift in Sources */,
+				14A40A3A246C38C100D272AB /* MyCustomTableViewCell.swift in Sources */,
 				14A7B1AC2469EC3A007FDD85 /* UniversityAssessmentPlanningTool.xcdatamodeld in Sources */,
 				14A7B1B22469EC3A007FDD85 /* DetailViewController.swift in Sources */,
 				14A7B1C5246B3342007FDD85 /* AddNewAssessmentViewController.swift in Sources */,
 				14A7B1A92469EC3A007FDD85 /* AppDelegate.swift in Sources */,
+				14A40A3C246C6C7000D272AB /* UIViewController+Alerts.swift in Sources */,
 				14A7B1AE2469EC3A007FDD85 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
