@@ -7,13 +7,69 @@
 //
 
 import UIKit
+import CoreData
 
 class AddNewAssessmentViewController: UIViewController {
+    
+    @IBOutlet weak var moduleNameField: UITextField!
+    @IBOutlet weak var assessmentNameField: UITextField!
+    @IBOutlet weak var levelSegment: UISegmentedControl!
+    @IBOutlet weak var valuePercentageField: UITextField!
+    @IBOutlet weak var notesField: UITextField!
+    @IBOutlet weak var addToCalendarSwitch: UISwitch!
+    @IBOutlet weak var marksAwardedField: UITextField!
+    @IBOutlet weak var selectedDueDateLable: UILabel!
+    @IBOutlet weak var dueDatePicker: UIDatePicker!
+    @IBOutlet weak var saveAssessmentButton: UIButton!
+    
+    var assessments: [NSManagedObject] = []
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
         // Do any additional setup after loading the view.
+    }
+    
+    
+    @IBAction func onSave(_ sender: Any) {
+         guard let appDelegate =
+           UIApplication.shared.delegate as? AppDelegate else {
+           return
+         }
+         
+         // 1
+         let managedContext =
+           appDelegate.persistentContainer.viewContext
+         
+         // 2
+         let entity =
+           NSEntityDescription.entity(forEntityName: "Assessment",
+                                      in: managedContext)!
+         
+         let assessment = NSManagedObject(entity: entity,
+                                      insertInto: managedContext)
+         
+         // 3
+        assessment.setValue(moduleNameField.text!, forKeyPath: "asssessmentModuleName")
+        assessment.setValue(assessmentNameField.text!, forKeyPath: "assessmentName")
+        assessment.setValue(Int(levelSegment.titleForSegment(at: levelSegment.selectedSegmentIndex)!), forKeyPath: "asssessmentLevel")
+        assessment.setValue(Int(valuePercentageField.text!), forKeyPath: "asssessmentValue")
+        assessment.setValue(notesField.text!, forKeyPath: "asssessmentNotes")
+        assessment.setValue(addToCalendarSwitch.isOn, forKeyPath: "asssessmentDueReminder")
+        assessment.setValue(Int(marksAwardedField.text!), forKeyPath: "asssessmentMarkAwarded")
+        assessment.setValue(dueDatePicker.date, forKeyPath: "asssessmentDueDate")
+         
+         // 4
+         do {
+           try managedContext.save()
+           assessments.append(assessment)
+         } catch let error as NSError {
+           print("Could not save. \(error), \(error.userInfo)")
+         }
     }
     
 

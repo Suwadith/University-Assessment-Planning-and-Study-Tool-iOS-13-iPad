@@ -13,25 +13,57 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
-
-
+//    var assessments: [NSManagedObject] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         navigationItem.leftBarButtonItem = editButtonItem
 
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-        navigationItem.rightBarButtonItem = addButton
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+//        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
+//        navigationItem.rightBarButtonItem = addButton
+//        if let split = splitViewController {
+//            let controllers = split.viewControllers
+//            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+//        }
+        
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
+      
+      //1
+      guard let appDelegate =
+        UIApplication.shared.delegate as? AppDelegate else {
+          return
+      }
+      
+      let managedContext =
+        appDelegate.persistentContainer.viewContext
+      
+      //2
+      let fetchRequest =
+        NSFetchRequest<NSManagedObject>(entityName: "Assessment")
+      
+      //3
+      do {
+        let assessments = try managedContext.fetch(fetchRequest)
+        for assessment in assessments as! [Assessment] {
+            print(assessment.assessmentName!)
         }
+      } catch let error as NSError {
+        print("Could not fetch. \(error), \(error.userInfo)")
+      }
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
-        super.viewWillAppear(animated)
-    }
+
+
+//    override func viewWillAppear(_ animated: Bool) {
+//        clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
+//        super.viewWillAppear(animated)
+//    }
 
     @objc
     func insertNewObject(_ sender: Any) {
