@@ -356,6 +356,9 @@
                                                 <subviews>
                                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="GbB-xd-htI">
                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="216"/>
+                                                        <connections>
+                                                            <action selector="onDateChange:" destination="FVI-Fq-wnc" eventType="valueChanged" id="see-OS-auK"/>
+                                                        </connections>
                                                     </datePicker>
                                                 </subviews>
                                             </stackView>

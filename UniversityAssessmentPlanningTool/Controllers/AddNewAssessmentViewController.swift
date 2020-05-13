@@ -29,7 +29,15 @@ class AddNewAssessmentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let dateFormatter = DateFormatter()
+
+        dateFormatter.dateStyle = DateFormatter.Style.short
+        dateFormatter.timeStyle = DateFormatter.Style.short
         
+        let date = Date()
+
+        let strDate = dateFormatter.string(from: date)
+        selectedDueDateLable.text = strDate
 
         // Do any additional setup after loading the view.
     }
@@ -70,6 +78,17 @@ class AddNewAssessmentViewController: UIViewController {
          } catch let error as NSError {
            print("Could not save. \(error), \(error.userInfo)")
          }
+    }
+    
+    
+    @IBAction func onDateChange(_ sender: Any) {
+        let dateFormatter = DateFormatter()
+
+        dateFormatter.dateStyle = DateFormatter.Style.short
+        dateFormatter.timeStyle = DateFormatter.Style.short
+
+        let strDate = dateFormatter.string(from: dueDatePicker.date)
+        selectedDueDateLable.text = strDate
     }
     
 
