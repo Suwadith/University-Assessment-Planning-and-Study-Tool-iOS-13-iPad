@@ -21,7 +21,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        navigationItem.leftBarButtonItem = editButtonItem
+//        navigationItem.leftBarButtonItem = editButtonItem
 //        editButtonItem.title = "Delete"
         
         dateFormatter.styleDate()
@@ -53,6 +53,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         let assessments = try managedContext.fetch(fetchRequest)
         for assessment in assessments as! [Assessment] {
             print(assessment.assessmentName!)
+        
         }
       } catch let error as NSError {
         print("Could not fetch. \(error), \(error.userInfo)")
@@ -73,6 +74,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 controller.navigationItem.leftItemsSupplementBackButton = true
                 detailViewController = controller
             }
+        } else if segue.identifier == "editAssessment" {
+            print("Edit")
         }
     }
 

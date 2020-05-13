@@ -9,9 +9,7 @@
         <attribute name="asssessmentModuleName" attributeType="String"/>
         <attribute name="asssessmentNotes" optional="YES" attributeType="String"/>
         <attribute name="asssessmentValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-    </entity>
-    <entity name="Event" representedClassName="Event" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="assessment" inverseEntity="Task"/>
     </entity>
     <entity name="Task" representedClassName="Task" parentEntity="Assessment" syncable="YES" codeGenerationType="class">
         <attribute name="taskDueDate" attributeType="Date" usesScalarValueType="NO"/>
@@ -20,10 +18,10 @@
         <attribute name="taskName" attributeType="String"/>
         <attribute name="taskNotes" attributeType="String"/>
         <attribute name="taskStartDate" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="assessment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Assessment" inverseName="tasks" inverseEntity="Assessment"/>
     </entity>
     <elements>
-        <element name="Assessment" positionX="270" positionY="207" width="128" height="163"/>
-        <element name="Task" positionX="270.47265625" positionY="456.23828125" width="128" height="133"/>
-        <element name="Event" positionX="494.30078125" positionY="241.1953125" width="128" height="58"/>
+        <element name="Assessment" positionX="270" positionY="207" width="128" height="178"/>
+        <element name="Task" positionX="270.47265625" positionY="456.23828125" width="128" height="148"/>
     </elements>
 </model>
