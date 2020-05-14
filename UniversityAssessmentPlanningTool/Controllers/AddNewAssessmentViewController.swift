@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import EventKit
 
 class AddNewAssessmentViewController: UIViewController {
     
@@ -64,11 +65,14 @@ class AddNewAssessmentViewController: UIViewController {
             assessment.setValue(addToCalendarSwitch.isOn, forKeyPath: "asssessmentDueReminder")
             assessment.setValue(Int(marksAwardedField.text!), forKeyPath: "asssessmentMarkAwarded")
             assessment.setValue(dueDatePicker.date, forKeyPath: "asssessmentDueDate")
+            assessment.setValue(addToCalendar(calendarSwitch: addToCalendarSwitch.isOn, assessmentName: assessmentNameField.text!, dueDate: dueDatePicker.date), forKey: "assessmentReminderIdentifier")
+            
             
             // 4
             do {
                 try managedContext.save()
                 assessments.append(assessment)
+                dismissPopOver()
             } catch let error as NSError {
                 print("Could not save. \(error), \(error.userInfo)")
             }
@@ -77,6 +81,15 @@ class AddNewAssessmentViewController: UIViewController {
         }
         
         
+    }
+    
+    func addToCalendar(calendarSwitch: Bool, assessmentName: String, dueDate: Date) -> String {
+        var reminderIdentifier = ""
+        if calendarSwitch {
+            let reminder = Reminder(title: assessmentName, date: dueDate)
+            reminderIdentifier = reminder.createEvent()
+        }
+        return reminderIdentifier
     }
     
     

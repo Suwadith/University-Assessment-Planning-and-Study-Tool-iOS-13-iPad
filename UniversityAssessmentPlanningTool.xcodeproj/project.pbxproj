@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14911147246D8760001CBD82 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14911146246D8760001CBD82 /* Reminder.swift */; };
 		14A40A31246C267D00D272AB /* DateFormatter+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A40A30246C267D00D272AB /* DateFormatter+Styling.swift */; };
 		14A40A3A246C38C100D272AB /* MyCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A40A39246C38C100D272AB /* MyCustomTableViewCell.swift */; };
 		14A40A3C246C6C7000D272AB /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A40A3B246C6C7000D272AB /* UIViewController+Alerts.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14911146246D8760001CBD82 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		14A40A30246C267D00D272AB /* DateFormatter+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Styling.swift"; sourceTree = "<group>"; };
 		14A40A39246C38C100D272AB /* MyCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCustomTableViewCell.swift; sourceTree = "<group>"; };
 		14A40A3B246C6C7000D272AB /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
@@ -53,6 +55,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14911145246D8731001CBD82 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				14911146246D8760001CBD82 /* Reminder.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		14A40A2F246C25AA00D272AB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -90,6 +100,7 @@
 		14A7B1A72469EC3A007FDD85 /* UniversityAssessmentPlanningTool */ = {
 			isa = PBXGroup;
 			children = (
+				14911145246D8731001CBD82 /* Models */,
 				14A40A36246C383400D272AB /* Views */,
 				14A40A2F246C25AA00D272AB /* Extensions */,
 				14A7B1C1246B326C007FDD85 /* Controllers */,
@@ -189,6 +200,7 @@
 				14A40A3E246C85D100D272AB /* EditAssessmentViewController.swift in Sources */,
 				14A7B1B02469EC3A007FDD85 /* MasterViewController.swift in Sources */,
 				14A40A31246C267D00D272AB /* DateFormatter+Styling.swift in Sources */,
+				14911147246D8760001CBD82 /* Reminder.swift in Sources */,
 				14A40A3A246C38C100D272AB /* MyCustomTableViewCell.swift in Sources */,
 				14A7B1AC2469EC3A007FDD85 /* UniversityAssessmentPlanningTool.xcdatamodeld in Sources */,
 				14A7B1B22469EC3A007FDD85 /* DetailViewController.swift in Sources */,

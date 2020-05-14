@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Assessment" representedClassName="Assessment" syncable="YES" codeGenerationType="class">
         <attribute name="assessmentName" attributeType="String"/>
+        <attribute name="assessmentReminderIdentifier" optional="YES" attributeType="String"/>
         <attribute name="asssessmentDueDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="asssessmentDueReminder" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="asssessmentLevel" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -21,7 +22,7 @@
         <relationship name="assessment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Assessment" inverseName="tasks" inverseEntity="Assessment"/>
     </entity>
     <elements>
-        <element name="Assessment" positionX="270" positionY="207" width="128" height="178"/>
+        <element name="Assessment" positionX="270" positionY="207" width="128" height="193"/>
         <element name="Task" positionX="270.47265625" positionY="456.23828125" width="128" height="148"/>
     </elements>
 </model>

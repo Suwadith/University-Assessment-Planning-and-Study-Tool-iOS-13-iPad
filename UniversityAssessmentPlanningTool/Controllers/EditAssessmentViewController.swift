@@ -40,6 +40,11 @@ class EditAssessmentViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     
     func configureView() {
         // Update the user interface for the detail item.
@@ -51,7 +56,7 @@ class EditAssessmentViewController: UIViewController {
                 assessmentName.text = detail.assessmentName
             }
             if let level = levelSegment {
-                level.selectedSegmentIndex = Int(detail.asssessmentLevel)
+                level.selectedSegmentIndex = Int(detail.asssessmentLevel)-3
             }
             if let valuePercentage = valuePercentageField {
                 valuePercentage.text = String(detail.asssessmentValue)
@@ -117,7 +122,7 @@ class EditAssessmentViewController: UIViewController {
             do {
                 try managedContext.save()
 //                assessments.append(object)
-                dismissEditAsessmentPopOver()
+                dismissPopOver()
             } catch let error as NSError {
                 print("Could not save. \(error), \(error.userInfo)")
             }
@@ -140,26 +145,12 @@ class EditAssessmentViewController: UIViewController {
         do {
             managedContext.delete(object)
             try managedContext.save()
-            dismissEditAsessmentPopOver()
+            dismissPopOver()
         }catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
         
     }
-    
-    
-    
-    func dismissEditAsessmentPopOver() {
-        dismiss(animated: true, completion: nil)
-        popoverPresentationController?.delegate?.popoverPresentationControllerDidDismissPopover?(popoverPresentationController!)
-        
-    }
-    
-    
-    
-    
-    
-    
     
     @IBAction func onDateChange(_ sender: Any) {
         

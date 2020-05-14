@@ -23,5 +23,11 @@ extension UIViewController {
         }
     }
     
+    func dismissPopOver() {
+        dismiss(animated: true, completion: nil)
+        popoverPresentationController?.delegate?.popoverPresentationControllerDidDismissPopover?(popoverPresentationController!)
+        
+    }
+    
     
 }
