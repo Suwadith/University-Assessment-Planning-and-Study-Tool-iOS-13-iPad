@@ -28,47 +28,134 @@ class EditAssessmentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         dateFormatter.styleDate()
-        let date = Date()
-        let strDate = dateFormatter.string(from: date)
-        selectedDueDateLable.text = strDate
+        
+        configureView()
+        
+        
+        //        let date = Date()
+        //        let strDate = dateFormatter.string(from: date)
+        //        selectedDueDateLable.text = strDate
         
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func onEdit(_ sender: Any) {
+    
+    func configureView() {
+        // Update the user interface for the detail item.
+        if let detail = detailItem {
+            if let moduleName = moduleNameField {
+                moduleName.text = detail.asssessmentModuleName
+            }
+            if let assessmentName = assessmentNameField {
+                assessmentName.text = detail.assessmentName
+            }
+            if let level = levelSegment {
+                level.selectedSegmentIndex = Int(detail.asssessmentLevel)
+            }
+            if let valuePercentage = valuePercentageField {
+                valuePercentage.text = String(detail.asssessmentValue)
+            }
+            if let notes = notesField {
+                notes.text = detail.asssessmentNotes
+            }
+            if let calendarSwitch = addToCalendarSwitch {
+                calendarSwitch.isOn = detail.asssessmentDueReminder
+            }
+            if let marks = marksAwardedField {
+                marks.text = String(detail.asssessmentMarkAwarded)
+            }
+            if let dueDateLabel = selectedDueDateLable {
+                dueDateLabel.text = dateFormatter.string(from: detail.asssessmentDueDate!)
+                print(detail.asssessmentDueDate!)
+            }
+            if let dueDate = dueDatePicker {
+                dueDate.date = detail.asssessmentDueDate!
+            }
+        }
+    }
+    
+    
+    var detailItem: Assessment? {
+        didSet {
+            // Update the view.
+            configureView()
+        }
+    }
+    
+    
+    
+    @IBAction func onUpdate(_ sender: Any) {
+        if moduleNameField.text?.isEmpty == false && assessmentNameField.text?.isEmpty == false && valuePercentageField.text?.isEmpty == false
+            && marksAwardedField.text?.isEmpty == false {
+            
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return
+            }
+            
+            // 1
+            let managedContext = appDelegate.persistentContainer.viewContext
+            
+            // 2
+            //        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Assessment")
+            //
+            //        fetchRequest.predicate = NSPredicate(format: "assessmentName = ", "")
+            
+            let object = detailItem!
+            
+            // 3
+            object.setValue(moduleNameField.text!, forKeyPath: "asssessmentModuleName")
+            object.setValue(assessmentNameField.text!, forKeyPath: "assessmentName")
+            object.setValue(Int(levelSegment.titleForSegment(at: levelSegment.selectedSegmentIndex)!), forKeyPath: "asssessmentLevel")
+            object.setValue(Int(valuePercentageField.text!), forKeyPath: "asssessmentValue")
+            object.setValue(notesField.text!, forKeyPath: "asssessmentNotes")
+            object.setValue(addToCalendarSwitch.isOn, forKeyPath: "asssessmentDueReminder")
+            object.setValue(Int(marksAwardedField.text!), forKeyPath: "asssessmentMarkAwarded")
+            object.setValue(dueDatePicker.date, forKeyPath: "asssessmentDueDate")
+            
+            // 4
+            do {
+                try managedContext.save()
+//                assessments.append(object)
+                dismissEditAsessmentPopOver()
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+        } else {
+            showAlert(title: "Error", msg: "Only the notes field can be left empty")
+        }
+    }
+    
+    
+    @IBAction func onDelete(_ sender: Any) {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
         
-        // 1
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        // 2
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Assessment")
+        let object = detailItem!
         
-        fetchRequest.predicate = NSPredicate(format: "assessmentName = ", "")
+        do {
+            managedContext.delete(object)
+            try managedContext.save()
+            dismissEditAsessmentPopOver()
+        }catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
         
-        // 3
-//        assessment.setValue(moduleNameField.text!, forKeyPath: "asssessmentModuleName")
-//        assessment.setValue(assessmentNameField.text!, forKeyPath: "assessmentName")
-//        assessment.setValue(Int(levelSegment.titleForSegment(at: levelSegment.selectedSegmentIndex)!), forKeyPath: "asssessmentLevel")
-//        assessment.setValue(Int(valuePercentageField.text!), forKeyPath: "asssessmentValue")
-//        assessment.setValue(notesField.text!, forKeyPath: "asssessmentNotes")
-//        assessment.setValue(addToCalendarSwitch.isOn, forKeyPath: "asssessmentDueReminder")
-//        assessment.setValue(Int(marksAwardedField.text!), forKeyPath: "asssessmentMarkAwarded")
-//        assessment.setValue(dueDatePicker.date, forKeyPath: "asssessmentDueDate")
-        
-        // 4
-//        do {
-//            try managedContext.save()
-//            assessments.append(assessment)
-//        } catch let error as NSError {
-//            print("Could not save. \(error), \(error.userInfo)")
-//        }
     }
+    
+    
+    
+    func dismissEditAsessmentPopOver() {
+        dismiss(animated: true, completion: nil)
+        popoverPresentationController?.delegate?.popoverPresentationControllerDidDismissPopover?(popoverPresentationController!)
+        
+    }
+    
+    
     
     
     
