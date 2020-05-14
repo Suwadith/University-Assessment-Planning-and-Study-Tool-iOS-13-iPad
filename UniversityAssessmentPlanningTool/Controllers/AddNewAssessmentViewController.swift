@@ -27,13 +27,24 @@ class AddNewAssessmentViewController: UIViewController {
     
     let dateFormatter = DateFormatter()
     
+    let eventStore = EKEventStore()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         dateFormatter.styleDate()
-        let date = Date()
-        let strDate = dateFormatter.string(from: date)
+        let currentDate = Date()
+        var dateComponent = DateComponents()
+        dateComponent.minute = 30
+        let futureDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)!
+        let strDate = dateFormatter.string(from: futureDate)
         selectedDueDateLable.text = strDate
+        
+        dueDatePicker.minimumDate = futureDate
+        
+
+        eventStore.requestAccess(to: .event, completion: {_,_ in })
+    
 
         // Do any additional setup after loading the view.
     }
@@ -65,13 +76,16 @@ class AddNewAssessmentViewController: UIViewController {
             assessment.setValue(addToCalendarSwitch.isOn, forKeyPath: "asssessmentDueReminder")
             assessment.setValue(Int(marksAwardedField.text!), forKeyPath: "asssessmentMarkAwarded")
             assessment.setValue(dueDatePicker.date, forKeyPath: "asssessmentDueDate")
-            assessment.setValue(addToCalendar(calendarSwitch: addToCalendarSwitch.isOn, assessmentName: assessmentNameField.text!, dueDate: dueDatePicker.date), forKey: "assessmentReminderIdentifier")
+            let reminderIdentifier = addToCalendar(calendarSwitch: addToCalendarSwitch.isOn, assessmentName: assessmentNameField.text!, dueDate: dueDatePicker.date)
+//            print(reminderIdentifier)
+            assessment.setValue(reminderIdentifier, forKey: "assessmentReminderIdentifier")
             
             
             // 4
             do {
                 try managedContext.save()
-                assessments.append(assessment)
+//                assessments.append(assessment)
+//                print(assessment)
                 dismissPopOver()
             } catch let error as NSError {
                 print("Could not save. \(error), \(error.userInfo)")
@@ -86,8 +100,9 @@ class AddNewAssessmentViewController: UIViewController {
     func addToCalendar(calendarSwitch: Bool, assessmentName: String, dueDate: Date) -> String {
         var reminderIdentifier = ""
         if calendarSwitch {
-            let reminder = Reminder(title: assessmentName, date: dueDate)
-            reminderIdentifier = reminder.createEvent()
+            let reminder = Reminder()
+            reminderIdentifier = reminder.createEvent(title: assessmentName, date: dueDate)
+//            print(reminderIdentifier)
         }
         return reminderIdentifier
     }

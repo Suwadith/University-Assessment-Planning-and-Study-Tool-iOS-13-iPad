@@ -11,46 +11,67 @@ import EventKit
 
 class Reminder {
     
-    var assessmentTitle: String
-    var date: Date
-    var identifier: String
-    
-    
-    init(title: String, date: Date) {
-        self.assessmentTitle = title
-        self.date = date
-        self.identifier = ""
-    }
-    
-    func createEvent() -> String{
+    func createEvent(title: String, date: Date) -> String{
+        
         let eventStore:EKEventStore = EKEventStore()
+        
+        var identifier = ""
         
         eventStore.requestAccess(to: .event) {(granted, error) in
             
             if granted && error == nil {
-                print("granted \(granted)")
-                print("error \(error)")
+                //                print("granted \(granted)")
+                //                print("error \(error)")
                 
                 let event:EKEvent = EKEvent(eventStore: eventStore)
-                event.title = self.assessmentTitle
+                event.title = title
                 event.startDate = Date()
-                event.endDate = self.date
+                event.endDate = date
                 event.calendar = eventStore.defaultCalendarForNewEvents
                 
                 do {
                     try eventStore.save(event, span: .thisEvent)
-                    self.identifier = event.eventIdentifier
+                    identifier = event.eventIdentifier
+                    //                    print("in: " + identifier)
                 } catch let error as NSError {
                     print("error \(error)")
                 }
-                print("Save Event")
+                //                print("Save Event")
                 
             } else {
                 print("error \(error)")
             }
             
         }
-        return self.identifier
+        
+        sleep(1)
+        //        print("out: " + identifier)
+        
+        return identifier
+    }
+    
+    func deleteEvent(eventIdentifier: String) -> Bool {
+        var sucesss = false
+        let eventStore:EKEventStore = EKEventStore()
+        
+        eventStore.requestAccess(to: .event) {(granted, error) in
+            if granted && error == nil {
+                
+                let eventToRemove = eventStore.event(withIdentifier: eventIdentifier)
+                if eventToRemove != nil {
+                    do {
+                        try eventStore.remove(eventToRemove!, span: .thisEvent)
+                        sucesss = true
+                    } catch let error as NSError {
+                        print("error \(error)")
+                        sucesss = false
+                    }
+                }
+            }
+            
+        }
+        sleep(1)
+        return sucesss
     }
     
 }

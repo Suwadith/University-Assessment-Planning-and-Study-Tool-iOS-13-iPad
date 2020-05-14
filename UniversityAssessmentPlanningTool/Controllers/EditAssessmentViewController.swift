@@ -29,6 +29,14 @@ class EditAssessmentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dateFormatter.styleDate()
+        let currentDate = Date()
+        var dateComponent = DateComponents()
+        dateComponent.minute = 30
+        let futureDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)!
+        let strDate = dateFormatter.string(from: futureDate)
+        selectedDueDateLable.text = strDate
+        
+        dueDatePicker.minimumDate = futureDate
         
         configureView()
         
@@ -66,6 +74,9 @@ class EditAssessmentViewController: UIViewController {
             }
             if let calendarSwitch = addToCalendarSwitch {
                 calendarSwitch.isOn = detail.asssessmentDueReminder
+                if calendarSwitch.isOn {
+                    print(detail.assessmentReminderIdentifier!)
+                }
             }
             if let marks = marksAwardedField {
                 marks.text = String(detail.asssessmentMarkAwarded)
@@ -94,6 +105,8 @@ class EditAssessmentViewController: UIViewController {
         if moduleNameField.text?.isEmpty == false && assessmentNameField.text?.isEmpty == false && valuePercentageField.text?.isEmpty == false
             && marksAwardedField.text?.isEmpty == false {
             
+            
+            
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
             }
@@ -118,10 +131,30 @@ class EditAssessmentViewController: UIViewController {
             object.setValue(Int(marksAwardedField.text!), forKeyPath: "asssessmentMarkAwarded")
             object.setValue(dueDatePicker.date, forKeyPath: "asssessmentDueDate")
             
+            
+            
+            //            print(reminderIdentifier)
+            
+            
             // 4
             do {
+                
+                print(object.assessmentReminderIdentifier!)
+                
+                if object.assessmentReminderIdentifier != "" {
+                    let reminder = Reminder()
+                    reminder.deleteEvent(eventIdentifier: object.assessmentReminderIdentifier!)
+                    object.setValue("", forKey: "assessmentReminderIdentifier")
+                }
+                
+                //                sleep(1)
+                if addToCalendarSwitch.isOn {
+                    let reminderIdentifier = addToCalendar(calendarSwitch: addToCalendarSwitch.isOn, assessmentName: assessmentNameField.text!, dueDate: dueDatePicker.date)
+                    object.setValue(reminderIdentifier, forKey: "assessmentReminderIdentifier")
+                }
+                
                 try managedContext.save()
-//                assessments.append(object)
+                //                assessments.append(object)
                 dismissPopOver()
             } catch let error as NSError {
                 print("Could not save. \(error), \(error.userInfo)")
@@ -143,13 +176,30 @@ class EditAssessmentViewController: UIViewController {
         let object = detailItem!
         
         do {
+            
+            if object.assessmentReminderIdentifier != "" {
+                let reminder = Reminder()
+                reminder.deleteEvent(eventIdentifier: object.assessmentReminderIdentifier!)
+            }
+            
             managedContext.delete(object)
             try managedContext.save()
+            
             dismissPopOver()
         }catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
         
+    }
+    
+    func addToCalendar(calendarSwitch: Bool, assessmentName: String, dueDate: Date) -> String {
+        var reminderIdentifier = ""
+        if calendarSwitch {
+            let reminder = Reminder()
+            reminderIdentifier = reminder.createEvent(title: assessmentName, date: dueDate)
+            //            print(reminderIdentifier)
+        }
+        return reminderIdentifier
     }
     
     @IBAction func onDateChange(_ sender: Any) {
