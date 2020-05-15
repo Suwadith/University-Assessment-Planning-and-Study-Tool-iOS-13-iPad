@@ -23,6 +23,8 @@ class AddNewAssessmentViewController: UIViewController {
     @IBOutlet weak var dueDatePicker: UIDatePicker!
     @IBOutlet weak var saveAssessmentButton: UIButton!
     
+    
+    
     var assessments: [NSManagedObject] = []
     
     let dateFormatter = DateFormatter()

@@ -56,7 +56,7 @@ class EditAssessmentViewController: UIViewController {
     
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = detailItem {
+        if let detail = assessment {
             if let moduleName = moduleNameField {
                 moduleName.text = detail.asssessmentModuleName
             }
@@ -92,7 +92,7 @@ class EditAssessmentViewController: UIViewController {
     }
     
     
-    var detailItem: Assessment? {
+    var assessment: Assessment? {
         didSet {
             // Update the view.
             configureView()
@@ -119,7 +119,7 @@ class EditAssessmentViewController: UIViewController {
             //
             //        fetchRequest.predicate = NSPredicate(format: "assessmentName = ", "")
             
-            let object = detailItem!
+            let object = assessment!
             
             // 3
             object.setValue(moduleNameField.text!, forKeyPath: "asssessmentModuleName")
@@ -173,7 +173,7 @@ class EditAssessmentViewController: UIViewController {
         
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        let object = detailItem!
+        let object = assessment!
         
         do {
             

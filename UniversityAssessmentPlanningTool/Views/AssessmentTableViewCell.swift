@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyCustomTableViewCell: UITableViewCell {
+class AssessmentTableViewCell: UITableViewCell {
     
     
     @IBOutlet weak var assessmentModuleNameLable: UILabel!

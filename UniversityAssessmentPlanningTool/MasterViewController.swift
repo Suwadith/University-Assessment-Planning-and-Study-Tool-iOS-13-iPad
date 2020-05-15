@@ -77,7 +77,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             if let indexPath = tableView.indexPathForSelectedRow {
                 let object = fetchedResultsController.object(at: indexPath)
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
+                controller.assessment = object
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
 //                controller.navigationItem.leftItemsSupplementBackButton = true
                 detailViewController = controller
@@ -89,7 +89,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 let object = fetchedResultsController.object(at: indexPath)
                 print(object.assessmentName!)
                 let controller = (segue.destination as! UINavigationController).topViewController as! EditAssessmentViewController
-                controller.detailItem = object
+                controller.assessment = object
                 
             }
         }
@@ -107,7 +107,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Table View Cell", for: indexPath) as! MyCustomTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Master Table View Cell", for: indexPath) as! AssessmentTableViewCell
         let assessment = fetchedResultsController.object(at: indexPath)
         cell.assessmentModuleNameLable?.text = assessment.asssessmentModuleName!
         cell.assessmentNameLabel?.text = assessment.assessmentName!
@@ -147,7 +147,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
     }
     
-    func configureCell(_ cell: MyCustomTableViewCell, withEvent assessment: Assessment) {
+    func configureCell(_ cell: AssessmentTableViewCell, withEvent assessment: Assessment) {
         //        cell.textLabel!.text = assessment.asssessmentModuleName!
         cell.assessmentModuleNameLable.text = assessment.asssessmentModuleName
         cell.assessmentNameLabel.text = assessment.assessmentName
@@ -215,10 +215,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         case .delete:
             tableView.deleteRows(at: [indexPath!], with: .fade)
         case .update:
-            configureCell(tableView.cellForRow(at: indexPath!)! as! MyCustomTableViewCell, withEvent: anObject as! Assessment)
+            configureCell(tableView.cellForRow(at: indexPath!)! as! AssessmentTableViewCell, withEvent: anObject as! Assessment)
             print("in")
         case .move:
-            configureCell(tableView.cellForRow(at: indexPath!)! as! MyCustomTableViewCell, withEvent: anObject as! Assessment)
+            configureCell(tableView.cellForRow(at: indexPath!)! as! AssessmentTableViewCell, withEvent: anObject as! Assessment)
             tableView.moveRow(at: indexPath!, to: newIndexPath!)
         default:
             return

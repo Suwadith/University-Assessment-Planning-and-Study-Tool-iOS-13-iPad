@@ -50,6 +50,46 @@ class Reminder {
         return identifier
     }
     
+    
+    func createTaskEvent(title: String, startDate: Date, dueDate: Date) -> String{
+        
+        let eventStore:EKEventStore = EKEventStore()
+        
+        var identifier = ""
+        
+        eventStore.requestAccess(to: .event) {(granted, error) in
+            
+            if granted && error == nil {
+                //                print("granted \(granted)")
+                //                print("error \(error)")
+                
+                let event:EKEvent = EKEvent(eventStore: eventStore)
+                event.title = title
+                event.startDate = startDate
+                event.endDate = dueDate
+                event.calendar = eventStore.defaultCalendarForNewEvents
+                
+                do {
+                    try eventStore.save(event, span: .thisEvent)
+                    identifier = event.eventIdentifier
+                    //                    print("in: " + identifier)
+                } catch let error as NSError {
+                    print("error \(error)")
+                }
+                //                print("Save Event")
+                
+            } else {
+                print("error \(error)")
+            }
+            
+        }
+        
+        sleep(1)
+        //        print("out: " + identifier)
+        
+        return identifier
+    }
+    
     func deleteEvent(eventIdentifier: String) -> Bool {
         var sucesss = false
         let eventStore:EKEventStore = EKEventStore()
