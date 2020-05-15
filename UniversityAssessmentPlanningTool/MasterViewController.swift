@@ -33,7 +33,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
         
-        
+        autoSelectTableRow()
         
         
     }
@@ -79,9 +79,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = object
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-                controller.navigationItem.leftItemsSupplementBackButton = true
+//                controller.navigationItem.leftItemsSupplementBackButton = true
                 detailViewController = controller
-                print(object.assessmentName!)
+//                print(object.assessmentName!)
             }
         } else if segue.identifier == "editAssessment" {
             print("Edit")
@@ -235,13 +235,14 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         if tableView.hasRowAtIndexPath(indexPath: indexPath as NSIndexPath) {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
             
-            //            if let indexPath = tableView.indexPathForSelectedRow {
-            //                let object = fetchedResultsController.object(at: indexPath)
-            //                self.performSegue(withIdentifier: "showProjectDetails", sender: object)
-            //            }
-            //        } else {
-            //            let empty = {}
-            //            self.performSegue(withIdentifier: "showProjectDetails", sender: empty)
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let object = fetchedResultsController.object(at: indexPath)
+                self.performSegue(withIdentifier: "showDetail", sender: object)
+            }
+        } else {
+            let empty = {}
+            self.performSegue(withIdentifier: "showDetail", sender: empty)
+            
         }
     }
     

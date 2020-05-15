@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		14911147246D8760001CBD82 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14911146246D8760001CBD82 /* Reminder.swift */; };
+		14911149246E8CB3001CBD82 /* AddNewTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14911148246E8CB3001CBD82 /* AddNewTaskViewController.swift */; };
 		14A40A31246C267D00D272AB /* DateFormatter+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A40A30246C267D00D272AB /* DateFormatter+Styling.swift */; };
 		14A40A3A246C38C100D272AB /* MyCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A40A39246C38C100D272AB /* MyCustomTableViewCell.swift */; };
 		14A40A3C246C6C7000D272AB /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A40A3B246C6C7000D272AB /* UIViewController+Alerts.swift */; };
@@ -22,10 +23,12 @@
 		14A7B1B72469EC3B007FDD85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14A7B1B62469EC3B007FDD85 /* Assets.xcassets */; };
 		14A7B1BA2469EC3B007FDD85 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14A7B1B82469EC3B007FDD85 /* LaunchScreen.storyboard */; };
 		14A7B1C5246B3342007FDD85 /* AddNewAssessmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A7B1C4246B3342007FDD85 /* AddNewAssessmentViewController.swift */; };
+		14BE47F1246EB4ED00977803 /* EditTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BE47F0246EB4ED00977803 /* EditTaskViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		14911146246D8760001CBD82 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
+		14911148246E8CB3001CBD82 /* AddNewTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTaskViewController.swift; sourceTree = "<group>"; };
 		14A40A30246C267D00D272AB /* DateFormatter+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Styling.swift"; sourceTree = "<group>"; };
 		14A40A39246C38C100D272AB /* MyCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCustomTableViewCell.swift; sourceTree = "<group>"; };
 		14A40A3B246C6C7000D272AB /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
@@ -42,6 +45,7 @@
 		14A7B1B92469EC3B007FDD85 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		14A7B1BB2469EC3B007FDD85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14A7B1C4246B3342007FDD85 /* AddNewAssessmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewAssessmentViewController.swift; sourceTree = "<group>"; };
+		14BE47F0246EB4ED00977803 /* EditTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,8 @@
 			children = (
 				14A7B1C4246B3342007FDD85 /* AddNewAssessmentViewController.swift */,
 				14A40A3D246C85D100D272AB /* EditAssessmentViewController.swift */,
+				14911148246E8CB3001CBD82 /* AddNewTaskViewController.swift */,
+				14BE47F0246EB4ED00977803 /* EditTaskViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -202,6 +208,7 @@
 				14A40A31246C267D00D272AB /* DateFormatter+Styling.swift in Sources */,
 				14911147246D8760001CBD82 /* Reminder.swift in Sources */,
 				14A40A3A246C38C100D272AB /* MyCustomTableViewCell.swift in Sources */,
+				14BE47F1246EB4ED00977803 /* EditTaskViewController.swift in Sources */,
 				14A7B1AC2469EC3A007FDD85 /* UniversityAssessmentPlanningTool.xcdatamodeld in Sources */,
 				14A7B1B22469EC3A007FDD85 /* DetailViewController.swift in Sources */,
 				14A7B1C5246B3342007FDD85 /* AddNewAssessmentViewController.swift in Sources */,
@@ -209,6 +216,7 @@
 				14A7B1A92469EC3A007FDD85 /* AppDelegate.swift in Sources */,
 				14A40A3C246C6C7000D272AB /* UIViewController+Alerts.swift in Sources */,
 				14A7B1AE2469EC3A007FDD85 /* SceneDelegate.swift in Sources */,
+				14911149246E8CB3001CBD82 /* AddNewTaskViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
