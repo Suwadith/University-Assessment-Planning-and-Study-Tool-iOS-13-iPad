@@ -32,6 +32,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     
     let eventStore = EKEventStore()
     
+    let currentDate = Date()
     
 
     override func viewDidLoad() {
@@ -40,6 +41,23 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         // Do any additional setup after loading the view.
         
         dateFormatter.styleDate()
+        
+        let currentDate = Date()
+        
+        var startDateComponent = DateComponents()
+        startDateComponent.minute = 30
+
+
+        taskStartDatePicker.minimumDate = task?.taskStartDate
+        taskStartDatePicker.maximumDate = selectedAssessment?.asssessmentDueDate
+        
+        var dueDateComponent = DateComponents()
+        dueDateComponent.minute = 60
+        let dueDate = Calendar.current.date(byAdding: dueDateComponent, to: currentDate)!
+
+
+        taskDueDatePicker.minimumDate = dueDate
+        taskDueDatePicker.maximumDate = selectedAssessment?.asssessmentDueDate
         
         eventStore.requestAccess(to: .event, completion: {_,_ in })
         
@@ -114,16 +132,59 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
             object.setValue(taskDueDatePicker.date, forKeyPath: "taskDueDate")
             
             do {
+                    
+                print(object.taskDueReminder)
                 
-                try managedContext.save()
-                //                assessments.append(object)
-                dismissPopOver()
-            } catch let error as NSError {
-                print("Could not save. \(error), \(error.userInfo)")
+                if object.taskReminderIdentifier != "" {
+                    let reminder = Reminder()
+                    reminder.deleteEvent(eventIdentifier: object.taskReminderIdentifier!)
+                    object.setValue("", forKey: "taskReminderIdentifier")
+                }
+                    
+                    
+                    //                sleep(1)
+                    if taskReminderSwitch.isOn {
+                        let reminderIdentifier = addToCalendar(calendarSwitch: taskReminderSwitch.isOn, taskName: taskNameField.text!, startDate: taskStartDatePicker.date, dueDate: taskDueDatePicker.date)
+                        object.setValue(reminderIdentifier, forKey: "taskReminderIdentifier")
+                    }
+                    
+                    try managedContext.save()
+                    //                assessments.append(object)
+                    dismissPopOver()
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            } else {
+                showAlert(title: "Error", msg: "Only the notes field can be left empty")
             }
+        
+        
+    }
+    
+    func addToCalendar(calendarSwitch: Bool, taskName: String, startDate: Date, dueDate: Date) -> String {
+            var reminderIdentifier = ""
+            if calendarSwitch {
+                let reminder = Reminder()
+                reminderIdentifier = reminder.createTaskEvent(title: taskName, startDate: startDate, dueDate: dueDate)
+    //            print(reminderIdentifier)
+            }
+            return reminderIdentifier
         }
+    
+    @IBAction func onSliderChange(_ sender: UISlider) {
+        taskCompletionLabel.text = String(Int(sender.value)) + "% Completed"
+    }
+    
+    @IBAction func onStartDateChange(_ sender: Any) {
         
+        let strDate = dateFormatter.string(from: taskStartDatePicker.date)
+        taskStartDateLabel.text = strDate
+    }
+    
+    @IBAction func onDueDateChange(_ sender: Any) {
         
+        let strDate = dateFormatter.string(from: taskDueDatePicker.date)
+        taskDueDateLabel.text = strDate
     }
     
     /*

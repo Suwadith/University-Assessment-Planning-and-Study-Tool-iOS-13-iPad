@@ -102,7 +102,7 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
            
             let reminderIdentifier = addToCalendar(calendarSwitch: taskReminderSwitch.isOn, taskName: taskNameField.text!, startDate: taskStartDatePicker.date, dueDate: taskDueDatePicker.date)
 //            //            print(reminderIdentifier)
-//            task.setValue(reminderIdentifier, forKey: "taskDueReminder")
+            task.setValue(reminderIdentifier, forKey: "taskReminderIdentifier")
             selectedAssessment?.addToTasks((task as? Task)!)
             
             // 4

@@ -18,11 +18,12 @@
         <attribute name="taskDueReminder" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="taskName" attributeType="String"/>
         <attribute name="taskNotes" attributeType="String"/>
+        <attribute name="taskReminderIdentifier" optional="YES" attributeType="String"/>
         <attribute name="taskStartDate" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="assessment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Assessment" inverseName="tasks" inverseEntity="Assessment"/>
     </entity>
     <elements>
         <element name="Assessment" positionX="270" positionY="207" width="128" height="193"/>
-        <element name="Task" positionX="270.47265625" positionY="456.23828125" width="128" height="148"/>
+        <element name="Task" positionX="270.47265625" positionY="456.23828125" width="128" height="163"/>
     </elements>
 </model>

@@ -57,10 +57,10 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         if segue.identifier == "addTask" {
             let controller = (segue.destination as! UINavigationController).topViewController as! AddNewTaskViewController
             controller.selectedAssessment = assessment
-            if let controller = segue.destination as? UIViewController {
-                controller.popoverPresentationController!.delegate = self
-                controller.preferredContentSize = CGSize(width: 320, height: 500)
-            }
+//            if let controller = segue.destination as? UIViewController {
+//                controller.popoverPresentationController!.delegate = self
+//                controller.preferredContentSize = CGSize(width: 320, height: 500)
+//            }
             
         } else if segue.identifier == "editTask" {
         print("Edit")
@@ -69,7 +69,7 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
             print(object.taskName!)
             let controller = (segue.destination as! UINavigationController).topViewController as! EditTaskViewController
             controller.task = object
-            
+            controller.selectedAssessment = assessment
         }
         
         

@@ -2,7 +2,7 @@
 //  Task+CoreDataProperties.swift
 //  UniversityAssessmentPlanningTool
 //
-//  Created by Suwadith on 5/15/20.
+//  Created by Suwadith on 5/16/20.
 //  Copyright © 2020 Suwadith. All rights reserved.
 //
 //
@@ -23,6 +23,7 @@ extension Task {
     @NSManaged public var taskName: String?
     @NSManaged public var taskNotes: String?
     @NSManaged public var taskStartDate: Date?
+    @NSManaged public var taskReminderIdentifier: String?
     @NSManaged public var assessment: Assessment?
 
 }
