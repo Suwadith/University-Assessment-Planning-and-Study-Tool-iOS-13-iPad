@@ -91,7 +91,41 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
             configureView()
         }
     }
-
+    
+    
+    
+    @IBAction func onUpdate(_ sender: Any) {
+        if taskNameField.text?.isEmpty == false && taskNotesField.text?.isEmpty == false {
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return
+            }
+            
+            // 1
+            let managedContext = appDelegate.persistentContainer.viewContext
+            
+            let object = task!
+            
+            // 3
+            object.setValue(taskNameField.text!, forKeyPath: "taskName")
+            object.setValue(taskNotesField.text!, forKeyPath: "taskNotes")
+            object.setValue(taskReminderSwitch.isOn, forKeyPath: "taskDueReminder")
+            object.setValue(taskCompletionSlider.value, forKeyPath: "taskCompletion")
+            object.setValue(taskStartDatePicker.date, forKeyPath: "taskStartDate")
+            object.setValue(taskDueDatePicker.date, forKeyPath: "taskDueDate")
+            
+            do {
+                
+                try managedContext.save()
+                //                assessments.append(object)
+                dismissPopOver()
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+        }
+        
+        
+    }
+    
     /*
     // MARK: - Navigation
 
