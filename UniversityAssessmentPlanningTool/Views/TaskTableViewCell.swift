@@ -13,6 +13,7 @@ class TaskTableViewCell: UITableViewCell {
     
     @IBOutlet weak var taskNumberLabel: UILabel!
     @IBOutlet weak var taskNameLabel: UILabel!
+    @IBOutlet weak var taskNotesLabel: UILabel!
     @IBOutlet weak var taskDueDateLabel: UILabel!
     @IBOutlet weak var taskDaysLeftLabel: UILabel!
     @IBOutlet weak var taskDaysLeftBar: LinearProgressBar!

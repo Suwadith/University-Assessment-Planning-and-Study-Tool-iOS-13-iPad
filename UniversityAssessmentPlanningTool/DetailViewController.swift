@@ -126,6 +126,7 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         //        cell.textLabel!.text = assessment.asssessmentModuleName!
         cell.taskNumberLabel.text = "Task: " + String(index+1)
         cell.taskNameLabel.text = task.taskName
+        cell.taskNotesLabel.text = task.taskNotes
         cell.taskDueDateLabel.text = "Due: " + setDueDateCell(date: task.taskDueDate!)
         cell.taskDaysLeftLabel.text = "Days Left: " + String(setDaysLeftLabelCell(date: task.taskDueDate!))
         cell.setBars(startDate: task.taskStartDate!, dueDate: task.taskDueDate!, completion: Int(task.taskCompletion))
