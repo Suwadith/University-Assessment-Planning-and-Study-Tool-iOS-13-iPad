@@ -109,7 +109,7 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
             do {
                 try managedContext.save()
                                 tasks.append(task)
-                print(task)
+//                print(task)
                 dismissPopOver()
             } catch let error as NSError {
                 print("Could not save. \(error), \(error.userInfo)")

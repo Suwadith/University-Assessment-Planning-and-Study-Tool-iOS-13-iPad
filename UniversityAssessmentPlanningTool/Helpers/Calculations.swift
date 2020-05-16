@@ -31,7 +31,7 @@ public class Calculations {
         if elapsed > 0 {
             percentage = Int(100 - ((remaining / elapsed) * 100))
         }
-        
+//        print(percentage)
         return percentage
     }
     
@@ -75,7 +75,7 @@ public class Calculations {
         return (daysLeft, hoursLeft, minutesLeft)
     }
     
-    public func getProjectProgress(_ tasks: [Task]) -> Int {
+    public func getAssessmentProgress(_ tasks: [Task]) -> Int {
         var progressTotal: Float = 0
         var progress: Int = 0
         

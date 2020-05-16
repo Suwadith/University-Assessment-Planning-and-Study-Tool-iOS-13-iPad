@@ -19,6 +19,9 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
     @IBOutlet weak var assessmentDaysLeft: CircularProgressBar!
     @IBOutlet weak var detailTableView: UITableView!
     
+    let calculations: Calculations = Calculations()
+    let colours: Colours = Colours()
+    
     var managedObjectContext: NSManagedObjectContext? = nil
     
     let dateFormatter = DateFormatter()
@@ -40,12 +43,33 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
             if let assessmentNotes = assessmentNotesLabel {
                 assessmentNotes.text = detail.asssessmentNotes
             }
-            if let assessmentCompletion = assessmentCompletionBar {
-//                assessmentName.text = detail.assessmentName
-            }
-            if let assessmentDaysRemaining = assessmentDaysLeft {
-            //                assessmentName.text = detail.assessmentName
-                        }
+            
+            
+        let tasks = (detail.tasks!.allObjects as! [Task])
+        let assessmentProgress = calculations.getAssessmentProgress(tasks)
+            let daysLeftAsessment = calculations.getRemainingTimePercentage(currentDate as Date, end: detail.asssessmentDueDate as! Date)
+            var daysRemaining = self.calculations.getDateDiff(currentDate, end: detail.asssessmentDueDate!)
+        
+        if daysRemaining < 0 {
+            daysRemaining = 0
+        }
+        
+        DispatchQueue.main.async {
+            let colours = self.colours.getProgressGradient(assessmentProgress)
+            self.assessmentCompletionBar?.customSubtitle = "Completed"
+            self.assessmentCompletionBar?.startGradientColor = colours[0]
+            self.assessmentCompletionBar?.endGradientColor = colours[1]
+            self.assessmentCompletionBar?.progress = CGFloat(assessmentProgress) / 100
+        }
+        
+        DispatchQueue.main.async {
+            let colours = self.colours.getProgressGradient(daysLeftAsessment, negative: true)
+            self.assessmentDaysLeft?.customTitle = "\(daysRemaining)"
+            self.assessmentDaysLeft?.customSubtitle = "Days Left"
+            self.assessmentDaysLeft?.startGradientColor = colours[0]
+            self.assessmentDaysLeft?.endGradientColor = colours[1]
+            self.assessmentDaysLeft?.progress =  CGFloat(daysLeftAsessment) / 100
+        }
         }
         
 //        autoSelectTableRow()
@@ -74,10 +98,10 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
 //            }
             
         } else if segue.identifier == "editTask" {
-        print("Edit")
+//        print("Edit")
         if let indexPath = detailTableView.indexPathForSelectedRow {
             let object = fetchedResultsController.object(at: indexPath)
-            print(object.taskName!)
+//            print(object.taskName!)
             let controller = (segue.destination as! UINavigationController).topViewController as! EditTaskViewController
             controller.task = object
             controller.selectedAssessment = assessment

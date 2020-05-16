@@ -58,7 +58,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         do {
             let assessments = try managedContext.fetch(fetchRequest)
             for assessment in assessments as! [Assessment] {
-                print(assessment.assessmentName!)
+//                print(assessment.assessmentName!)
                 
             }
         } catch let error as NSError {
@@ -84,10 +84,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 //                print(object.assessmentName!)
             }
         } else if segue.identifier == "editAssessment" {
-            print("Edit")
+//            print("Edit")
             if let indexPath = tableView.indexPathForSelectedRow {
                 let object = fetchedResultsController.object(at: indexPath)
-                print(object.assessmentName!)
+//                print(object.assessmentName!)
                 let controller = (segue.destination as! UINavigationController).topViewController as! EditAssessmentViewController
                 controller.assessment = object
                 
@@ -216,7 +216,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             tableView.deleteRows(at: [indexPath!], with: .fade)
         case .update:
             configureCell(tableView.cellForRow(at: indexPath!)! as! AssessmentTableViewCell, withEvent: anObject as! Assessment)
-            print("in")
+//            print("in")
         case .move:
             configureCell(tableView.cellForRow(at: indexPath!)! as! AssessmentTableViewCell, withEvent: anObject as! Assessment)
             tableView.moveRow(at: indexPath!, to: newIndexPath!)

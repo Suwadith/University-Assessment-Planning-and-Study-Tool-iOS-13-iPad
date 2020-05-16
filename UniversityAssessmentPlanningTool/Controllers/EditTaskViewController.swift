@@ -133,7 +133,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
             
             do {
                     
-                print(object.taskDueReminder)
+//                print(object.taskDueReminder)
                 
                 if object.taskReminderIdentifier != "" {
                     let reminder = Reminder()
@@ -149,7 +149,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
                     }
                     
                     try managedContext.save()
-                    //                assessments.append(object)
+//                    tasks.append(object)
                     dismissPopOver()
                 } catch let error as NSError {
                     print("Could not save. \(error), \(error.userInfo)")

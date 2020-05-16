@@ -75,7 +75,7 @@ class EditAssessmentViewController: UIViewController {
             if let calendarSwitch = addToCalendarSwitch {
                 calendarSwitch.isOn = detail.asssessmentDueReminder
                 if calendarSwitch.isOn {
-                    print(detail.assessmentReminderIdentifier!)
+//                    print(detail.assessmentReminderIdentifier!)
                 }
             }
             if let marks = marksAwardedField {
@@ -83,7 +83,7 @@ class EditAssessmentViewController: UIViewController {
             }
             if let dueDateLabel = selectedDueDateLable {
                 dueDateLabel.text = dateFormatter.string(from: detail.asssessmentDueDate!)
-                print(detail.asssessmentDueDate!)
+//                print(detail.asssessmentDueDate!)
             }
             if let dueDate = dueDatePicker {
                 dueDate.date = detail.asssessmentDueDate!
@@ -139,7 +139,7 @@ class EditAssessmentViewController: UIViewController {
             // 4
             do {
                 
-                print(object.assessmentReminderIdentifier!)
+//                print(object.assessmentReminderIdentifier!)
                 
                 if object.assessmentReminderIdentifier != "" {
                     let reminder = Reminder()
