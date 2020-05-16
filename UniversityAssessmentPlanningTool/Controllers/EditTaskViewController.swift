@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import CoreData
+import EventKit
 
-class EditTaskViewController: UIViewController {
+class EditTaskViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
     @IBOutlet weak var taskNameField: UITextField!
     @IBOutlet weak var taskNotesField: UITextField!
@@ -22,11 +24,26 @@ class EditTaskViewController: UIViewController {
     @IBOutlet weak var taskUpdateButton: UIButton!
     
     
+    var tasks: [NSManagedObject] = []
+    
+    var selectedAssessment: Assessment?
+    
+    let dateFormatter = DateFormatter()
+    
+    let eventStore = EKEventStore()
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        dateFormatter.styleDate()
+        
+        eventStore.requestAccess(to: .event, completion: {_,_ in })
+        
+        configureView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,6 +51,46 @@ class EditTaskViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
+    
+    func configureView() {
+        // Update the user interface for the detail item.
+        if let detail = task {
+            if let taskName = taskNameField {
+                taskName.text = detail.taskName
+            }
+            if let taskNotes = taskNotesField {
+                taskNotes.text = detail.taskNotes
+            }
+            if let taskDueReminder = taskReminderSwitch {
+                taskDueReminder.isOn = detail.taskDueReminder
+            }
+            if let taskCompletion = taskCompletionSlider {
+                taskCompletion.value = Float(detail.taskCompletion)
+            }
+            if let taskCompletionStr = taskCompletionLabel {
+                taskCompletionStr.text = String(detail.taskCompletion) + "% Completed"
+            }
+            if let taskStartStr = taskStartDateLabel {
+                taskStartStr.text = dateFormatter.string(from: detail.taskStartDate!)
+            }
+            if let taskStartPicker = taskStartDatePicker {
+                taskStartPicker.date = detail.taskStartDate!
+            }
+            if let taskDueStr = taskDueDateLabel {
+                taskDueStr.text = dateFormatter.string(from: detail.taskDueDate!)
+            }
+            if let taskDuePicker = taskDueDatePicker {
+                taskDuePicker.date = detail.taskDueDate!
+            }
+        }
+    }
+    
+    var task: Task? {
+        didSet {
+            // Update the view.
+            configureView()
+        }
+    }
 
     /*
     // MARK: - Navigation

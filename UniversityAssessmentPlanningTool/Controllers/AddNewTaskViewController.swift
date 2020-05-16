@@ -100,7 +100,7 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
             task.setValue(taskStartDatePicker.date, forKeyPath: "taskStartDate")
             task.setValue(taskDueDatePicker.date, forKeyPath: "taskDueDate")
            
-//            let reminderIdentifier = addToCalendar(calendarSwitch: taskReminderSwitch.isOn, taskName: taskNameField.text!, startDate: taskStartDatePicker.date, dueDate: taskDueDatePicker.date)
+            let reminderIdentifier = addToCalendar(calendarSwitch: taskReminderSwitch.isOn, taskName: taskNameField.text!, startDate: taskStartDatePicker.date, dueDate: taskDueDatePicker.date)
 //            //            print(reminderIdentifier)
 //            task.setValue(reminderIdentifier, forKey: "taskDueReminder")
             selectedAssessment?.addToTasks((task as? Task)!)
@@ -129,5 +129,23 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
             }
             return reminderIdentifier
         }
+    
+    
+    
+    @IBAction func onSliderChange(_ sender: UISlider) {
+        taskCompletionLabel.text = String(Int(sender.value)) + "% Completed"
+    }
+    
+    @IBAction func onStartDateChange(_ sender: Any) {
+        
+        let strDate = dateFormatter.string(from: taskStartDatePicker.date)
+        taskStartDateLabel.text = strDate
+    }
+    
+    @IBAction func onDueDateChange(_ sender: Any) {
+        
+        let strDate = dateFormatter.string(from: taskDueDatePicker.date)
+        taskDueDateLabel.text = strDate
+    }
     
 }

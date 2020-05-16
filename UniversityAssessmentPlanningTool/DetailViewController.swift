@@ -37,6 +37,8 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
             
         }
         
+//        autoSelectTableRow()
+        
         //detailTableView?.reloadData()
     }
 
@@ -59,18 +61,28 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
                 controller.popoverPresentationController!.delegate = self
                 controller.preferredContentSize = CGSize(width: 320, height: 500)
             }
+            
+        } else if segue.identifier == "editTask" {
+        print("Edit")
+        if let indexPath = detailTableView.indexPathForSelectedRow {
+            let object = fetchedResultsController.object(at: indexPath)
+            print(object.taskName!)
+            let controller = (segue.destination as! UINavigationController).topViewController as! EditTaskViewController
+            controller.task = object
+            
         }
         
         
         
 //        if segue.identifier == "editTask" {
-//            if let indexPath = taskTable.indexPathForSelectedRow {
+//            if let indexPath = detailTableView.indexPathForSelectedRow {
 //                let object = fetchedResultsController.object(at: indexPath)
 //                let controller = (segue.destination as! UINavigationController).topViewController as! EditTaskViewController
-//                controller.editingTask = object as Task
-//                controller.selectedProject = selectedProject
+//                controller. = object as Task
+//                controller.task = selectedProject
 //            }
 //        }
+    }
     }
     
     func configureCell(_ cell: TaskTableViewCell, withEvent task: Task, index: Int) {
@@ -81,6 +93,10 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
 //        cell.assessmentMarkLabel.text = String(assessment.asssessmentMarkAwarded)
 //        cell.assessmentDueDateLabel.text = dateFormatter.string(from: assessment.asssessmentDueDate!)
     }
+    
+//    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
+//        autoSelectTableRow()
+//    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -189,12 +205,29 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
             detailTableView.moveRow(at: indexPath!, to: newIndexPath!)
         configureView()
         }
+//        autoSelectTableRow()
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         detailTableView.endUpdates()
     
     }
+    
+//    func autoSelectTableRow() {
+//        let indexPath = IndexPath(row: 0, section: 0)
+//        if detailTableView.hasRowAtIndexPath(indexPath: indexPath as NSIndexPath) {
+//            detailTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+//
+//            if let indexPath = detailTableView.indexPathForSelectedRow {
+//                let object = fetchedResultsController.object(at: indexPath)
+//                self.performSegue(withIdentifier: "showDetail", sender: object)
+//            }
+//        } else {
+//            let empty = {}
+//            self.performSegue(withIdentifier: "showDetail", sender: empty)
+//
+//        }
+//    }
     
 
 }
