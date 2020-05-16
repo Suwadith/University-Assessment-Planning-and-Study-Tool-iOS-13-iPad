@@ -47,8 +47,10 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
             
         let tasks = (detail.tasks!.allObjects as! [Task])
         let assessmentProgress = calculations.getAssessmentProgress(tasks)
-            let daysLeftAsessment = calculations.getRemainingTimePercentage(currentDate as Date, end: detail.asssessmentDueDate as! Date)
+            let daysLeftAsessment = calculations.getRemainingTimePercentage(detail.assessmentStartDate!, end: detail.asssessmentDueDate!)
+//            let daysLeftAsessment = 0
             var daysRemaining = self.calculations.getDateDiff(currentDate, end: detail.asssessmentDueDate!)
+//            var daysRemaining = setDaysLeftLabelCell(date: detail.asssessmentDueDate!)
         
         if daysRemaining < 0 {
             daysRemaining = 0
@@ -259,7 +261,11 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
     
     func setDaysLeftLabelCell(date: Date) -> Int {
-        return Calendar.current.dateComponents([.day], from: currentDate, to: date).day!
+        var daysLeft = Calendar.current.dateComponents([.day], from: currentDate, to: date).day!
+        if daysLeft < 0 {
+            daysLeft = 0
+        }
+        return daysLeft
     }
     
     func autoSelectTableRow() {

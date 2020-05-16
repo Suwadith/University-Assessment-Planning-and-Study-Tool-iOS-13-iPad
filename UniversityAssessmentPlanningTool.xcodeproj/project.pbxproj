@@ -27,10 +27,10 @@
 		14B995CF24702647008E054D /* LinearProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B995CE24702647008E054D /* LinearProgressBar.swift */; };
 		14B995D224703AF1008E054D /* Calculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B995D124703AF1008E054D /* Calculations.swift */; };
 		14B995D424703D02008E054D /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B995D324703D02008E054D /* Colours.swift */; };
-		14B995D924704AD6008E054D /* Task+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B995D524704AD6008E054D /* Task+CoreDataClass.swift */; };
-		14B995DA24704AD6008E054D /* Task+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B995D624704AD6008E054D /* Task+CoreDataProperties.swift */; };
-		14B995DB24704AD6008E054D /* Assessment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B995D724704AD6008E054D /* Assessment+CoreDataClass.swift */; };
-		14B995DC24704AD6008E054D /* Assessment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B995D824704AD6008E054D /* Assessment+CoreDataProperties.swift */; };
+		14B995E124708036008E054D /* Task+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B995DD24708036008E054D /* Task+CoreDataClass.swift */; };
+		14B995E224708036008E054D /* Task+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B995DE24708036008E054D /* Task+CoreDataProperties.swift */; };
+		14B995E324708036008E054D /* Assessment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B995DF24708036008E054D /* Assessment+CoreDataClass.swift */; };
+		14B995E424708036008E054D /* Assessment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B995E024708036008E054D /* Assessment+CoreDataProperties.swift */; };
 		14BE47F1246EB4ED00977803 /* EditTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BE47F0246EB4ED00977803 /* EditTaskViewController.swift */; };
 		14BE47FC246EFCF900977803 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BE47FB246EFCF900977803 /* TaskTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -58,10 +58,10 @@
 		14B995CE24702647008E054D /* LinearProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearProgressBar.swift; sourceTree = "<group>"; };
 		14B995D124703AF1008E054D /* Calculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculations.swift; sourceTree = "<group>"; };
 		14B995D324703D02008E054D /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
-		14B995D524704AD6008E054D /* Task+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataClass.swift"; sourceTree = "<group>"; };
-		14B995D624704AD6008E054D /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		14B995D724704AD6008E054D /* Assessment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Assessment+CoreDataClass.swift"; sourceTree = "<group>"; };
-		14B995D824704AD6008E054D /* Assessment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Assessment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		14B995DD24708036008E054D /* Task+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataClass.swift"; sourceTree = "<group>"; };
+		14B995DE24708036008E054D /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		14B995DF24708036008E054D /* Assessment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Assessment+CoreDataClass.swift"; sourceTree = "<group>"; };
+		14B995E024708036008E054D /* Assessment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Assessment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		14BE47F0246EB4ED00977803 /* EditTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewController.swift; sourceTree = "<group>"; };
 		14BE47FB246EFCF900977803 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -167,10 +167,10 @@
 		14BE47FA246EF2A700977803 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				14B995D524704AD6008E054D /* Task+CoreDataClass.swift */,
-				14B995D624704AD6008E054D /* Task+CoreDataProperties.swift */,
-				14B995D724704AD6008E054D /* Assessment+CoreDataClass.swift */,
-				14B995D824704AD6008E054D /* Assessment+CoreDataProperties.swift */,
+				14B995DD24708036008E054D /* Task+CoreDataClass.swift */,
+				14B995DE24708036008E054D /* Task+CoreDataProperties.swift */,
+				14B995DF24708036008E054D /* Assessment+CoreDataClass.swift */,
+				14B995E024708036008E054D /* Assessment+CoreDataProperties.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -248,19 +248,19 @@
 			files = (
 				14A40A3E246C85D100D272AB /* EditAssessmentViewController.swift in Sources */,
 				14A7B1B02469EC3A007FDD85 /* MasterViewController.swift in Sources */,
-				14B995DC24704AD6008E054D /* Assessment+CoreDataProperties.swift in Sources */,
+				14B995E424708036008E054D /* Assessment+CoreDataProperties.swift in Sources */,
 				14A40A31246C267D00D272AB /* DateFormatter+Styling.swift in Sources */,
 				14B995D224703AF1008E054D /* Calculations.swift in Sources */,
-				14B995DA24704AD6008E054D /* Task+CoreDataProperties.swift in Sources */,
+				14B995E224708036008E054D /* Task+CoreDataProperties.swift in Sources */,
 				14911147246D8760001CBD82 /* Reminder.swift in Sources */,
 				14A40A3A246C38C100D272AB /* AssessmentTableViewCell.swift in Sources */,
-				14B995D924704AD6008E054D /* Task+CoreDataClass.swift in Sources */,
+				14B995E124708036008E054D /* Task+CoreDataClass.swift in Sources */,
 				14BE47F1246EB4ED00977803 /* EditTaskViewController.swift in Sources */,
 				14A7B1AC2469EC3A007FDD85 /* UniversityAssessmentPlanningTool.xcdatamodeld in Sources */,
 				14A7B1B22469EC3A007FDD85 /* DetailViewController.swift in Sources */,
 				14BE47FC246EFCF900977803 /* TaskTableViewCell.swift in Sources */,
 				14B995D424703D02008E054D /* Colours.swift in Sources */,
-				14B995DB24704AD6008E054D /* Assessment+CoreDataClass.swift in Sources */,
+				14B995E324708036008E054D /* Assessment+CoreDataClass.swift in Sources */,
 				14A7B1C5246B3342007FDD85 /* AddNewAssessmentViewController.swift in Sources */,
 				14A40A40246D146500D272AB /* UITableView.swift in Sources */,
 				14A7B1A92469EC3A007FDD85 /* AppDelegate.swift in Sources */,

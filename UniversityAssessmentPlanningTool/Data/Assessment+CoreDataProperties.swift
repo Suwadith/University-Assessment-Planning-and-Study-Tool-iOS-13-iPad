@@ -2,7 +2,7 @@
 //  Assessment+CoreDataProperties.swift
 //  UniversityAssessmentPlanningTool
 //
-//  Created by Suwadith on 5/16/20.
+//  Created by Suwadith on 5/17/20.
 //  Copyright © 2020 Suwadith. All rights reserved.
 //
 //
@@ -26,6 +26,7 @@ extension Assessment {
     @NSManaged public var asssessmentModuleName: String?
     @NSManaged public var asssessmentNotes: String?
     @NSManaged public var asssessmentValue: Int16
+    @NSManaged public var assessmentStartDate: Date?
     @NSManaged public var tasks: NSSet?
 
 }

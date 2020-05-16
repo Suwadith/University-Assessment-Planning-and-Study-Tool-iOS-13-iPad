@@ -129,6 +129,7 @@ class EditAssessmentViewController: UIViewController {
             object.setValue(notesField.text!, forKeyPath: "asssessmentNotes")
             object.setValue(addToCalendarSwitch.isOn, forKeyPath: "asssessmentDueReminder")
             object.setValue(Int(marksAwardedField.text!), forKeyPath: "asssessmentMarkAwarded")
+            object.setValue(assessment?.assessmentStartDate, forKeyPath: "assessmentStartDate")
             object.setValue(dueDatePicker.date, forKeyPath: "asssessmentDueDate")
             
             
@@ -165,32 +166,32 @@ class EditAssessmentViewController: UIViewController {
     }
     
     
-    @IBAction func onDelete(_ sender: Any) {
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let object = assessment!
-        
-        do {
-            
-            if object.assessmentReminderIdentifier != "" {
-                let reminder = Reminder()
-                reminder.deleteEvent(eventIdentifier: object.assessmentReminderIdentifier!)
-            }
-            
-            managedContext.delete(object)
-            try managedContext.save()
-            
-            dismissPopOver()
-        }catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }
-        
-    }
+//    @IBAction func onDelete(_ sender: Any) {
+//
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return
+//        }
+//
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//
+//        let object = assessment!
+//
+//        do {
+//
+//            if object.assessmentReminderIdentifier != "" {
+//                let reminder = Reminder()
+//                reminder.deleteEvent(eventIdentifier: object.assessmentReminderIdentifier!)
+//            }
+//
+//            managedContext.delete(object)
+//            try managedContext.save()
+//            
+//            dismissPopOver()
+//        }catch let error as NSError {
+//            print("Could not save. \(error), \(error.userInfo)")
+//        }
+//
+//    }
     
     func addToCalendar(calendarSwitch: Bool, assessmentName: String, dueDate: Date) -> String {
         var reminderIdentifier = ""

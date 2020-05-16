@@ -111,8 +111,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         let assessment = fetchedResultsController.object(at: indexPath)
         cell.assessmentModuleNameLable?.text = assessment.asssessmentModuleName!
         cell.assessmentNameLabel?.text = assessment.assessmentName!
-        cell.assessmentValueLabel?.text = String(assessment.asssessmentValue)
-        cell.assessmentMarkLabel?.text = String(assessment.asssessmentMarkAwarded)
+        cell.assessmentValueLabel?.text = String(assessment.asssessmentValue) + "%"
+        cell.assessmentMarkLabel?.text = String(assessment.asssessmentMarkAwarded) + "%"
+        dateFormatter.dateFormat = "MMM d, yyyy"
         cell.assessmentDueDateLabel?.text = dateFormatter.string(from: assessment.asssessmentDueDate!)
         
         //        configureCell(cell, withEvent: assessment)

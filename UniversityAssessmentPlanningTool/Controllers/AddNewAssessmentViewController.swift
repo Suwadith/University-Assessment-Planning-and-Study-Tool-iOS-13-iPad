@@ -23,7 +23,7 @@ class AddNewAssessmentViewController: UIViewController {
     @IBOutlet weak var dueDatePicker: UIDatePicker!
     @IBOutlet weak var saveAssessmentButton: UIButton!
     
-    
+    let currentDate = Date()
     
     var assessments: [NSManagedObject] = []
     
@@ -77,6 +77,7 @@ class AddNewAssessmentViewController: UIViewController {
             assessment.setValue(notesField.text!, forKeyPath: "asssessmentNotes")
             assessment.setValue(addToCalendarSwitch.isOn, forKeyPath: "asssessmentDueReminder")
             assessment.setValue(Int(marksAwardedField.text!), forKeyPath: "asssessmentMarkAwarded")
+            assessment.setValue(currentDate, forKeyPath: "assessmentStartDate")
             assessment.setValue(dueDatePicker.date, forKeyPath: "asssessmentDueDate")
             let reminderIdentifier = addToCalendar(calendarSwitch: addToCalendarSwitch.isOn, assessmentName: assessmentNameField.text!, dueDate: dueDatePicker.date)
 //            print(reminderIdentifier)
