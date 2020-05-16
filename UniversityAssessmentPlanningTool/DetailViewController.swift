@@ -14,11 +14,15 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     
     @IBOutlet weak var assessmentNameLabel: UILabel!
-    
-    
+    @IBOutlet weak var assessmentNotesLabel: UILabel!
+    @IBOutlet weak var assessmentCompletionBar: CircularProgressBar!
+    @IBOutlet weak var assessmentDaysLeft: CircularProgressBar!
     @IBOutlet weak var detailTableView: UITableView!
     
     var managedObjectContext: NSManagedObjectContext? = nil
+    
+    let dateFormatter = DateFormatter()
+    let currentDate = Date()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +34,18 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = assessment {
-            if let label = assessmentNameLabel {
-                label.text = detail.assessmentName
+            if let assessmentName = assessmentNameLabel {
+                assessmentName.text = detail.assessmentName
             }
-            
-            
+            if let assessmentNotes = assessmentNotesLabel {
+                assessmentNotes.text = detail.asssessmentNotes
+            }
+            if let assessmentCompletion = assessmentCompletionBar {
+//                assessmentName.text = detail.assessmentName
+            }
+            if let assessmentDaysRemaining = assessmentDaysLeft {
+            //                assessmentName.text = detail.assessmentName
+                        }
         }
         
 //        autoSelectTableRow()
@@ -87,7 +98,11 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     func configureCell(_ cell: TaskTableViewCell, withEvent task: Task, index: Int) {
         //        cell.textLabel!.text = assessment.asssessmentModuleName!
+        cell.taskNumberLabel.text = "Task: " + String(index+1)
         cell.taskNameLabel.text = task.taskName
+        cell.taskDueDateLabel.text = "Due: " + setDueDateCell(date: task.taskDueDate!)
+        cell.taskDaysLeftLabel.text = "Days Left: " + String(setDaysLeftLabelCell(date: task.taskDueDate!))
+        cell.setBars(startDate: task.taskStartDate!, dueDate: task.taskDueDate!, completion: Int(task.taskCompletion))
 //        cell.assessmentNameLabel.text = assessment.assessmentName
 //        cell.assessmentValueLabel.text = String(assessment.asssessmentValue)
 //        cell.assessmentMarkLabel.text = String(assessment.asssessmentMarkAwarded)
@@ -107,8 +122,9 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Detail Table View Cell", for: indexPath) as! TaskTableViewCell
         let task = fetchedResultsController.object(at: indexPath)
-        print(task)
-        cell.taskNameLabel?.text = task.taskName!
+//        print(task)
+//        cell.taskNameLabel?.text = task.taskName!
+        configureCell(cell, withEvent: task, index: indexPath.row)
         
         //        configureCell(cell, withEvent: assessment)
         return cell
@@ -213,21 +229,30 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     }
     
-//    func autoSelectTableRow() {
-//        let indexPath = IndexPath(row: 0, section: 0)
-//        if detailTableView.hasRowAtIndexPath(indexPath: indexPath as NSIndexPath) {
-//            detailTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
-//
-//            if let indexPath = detailTableView.indexPathForSelectedRow {
-//                let object = fetchedResultsController.object(at: indexPath)
-//                self.performSegue(withIdentifier: "showDetail", sender: object)
-//            }
-//        } else {
-//            let empty = {}
-//            self.performSegue(withIdentifier: "showDetail", sender: empty)
-//
-//        }
-//    }
+    func setDueDateCell(date: Date) -> String {
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: date)
+    }
+    
+    func setDaysLeftLabelCell(date: Date) -> Int {
+        return Calendar.current.dateComponents([.day], from: currentDate, to: date).day!
+    }
+    
+    func autoSelectTableRow() {
+        let indexPath = IndexPath(row: 0, section: 0)
+        if detailTableView.hasRowAtIndexPath(indexPath: indexPath as NSIndexPath) {
+            detailTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+
+            if let indexPath = detailTableView.indexPathForSelectedRow {
+                let object = fetchedResultsController.object(at: indexPath)
+                self.performSegue(withIdentifier: "showDetail", sender: object)
+            }
+        } else {
+            let empty = {}
+            self.performSegue(withIdentifier: "showDetail", sender: empty)
+
+        }
+    }
     
 
 }

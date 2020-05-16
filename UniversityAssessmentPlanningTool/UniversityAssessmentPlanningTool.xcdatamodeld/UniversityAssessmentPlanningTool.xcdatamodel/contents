@@ -10,7 +10,7 @@
         <attribute name="asssessmentModuleName" attributeType="String"/>
         <attribute name="asssessmentNotes" optional="YES" attributeType="String"/>
         <attribute name="asssessmentValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="assessment" inverseEntity="Task"/>
+        <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Task" inverseName="assessment" inverseEntity="Task"/>
     </entity>
     <entity name="Task" representedClassName="Task" syncable="YES">
         <attribute name="taskCompletion" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
