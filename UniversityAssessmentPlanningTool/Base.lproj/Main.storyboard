@@ -29,7 +29,7 @@
             <objects>
                 <viewController title="Detail" id="JEX-9P-axG" customClass="DetailViewController" customModule="UniversityAssessmentPlanningTool" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="svH-Pt-448">
-                        <rect key="frame" x="0.0" y="0.0" width="818.5" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="818" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
@@ -254,11 +254,13 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Tasks" id="mOI-FS-AaM"/>
                     <connections>
+                        <outlet property="addTaskButton" destination="E8V-hG-07G" id="SAr-Hi-UZj"/>
                         <outlet property="assessmentCompletionBar" destination="9bZ-P2-83H" id="DOF-u6-Ftg"/>
                         <outlet property="assessmentDaysLeft" destination="4eR-BP-1wV" id="MPd-Wy-3Cd"/>
                         <outlet property="assessmentNameLabel" destination="cGp-Ii-dHc" id="1UP-se-4P3"/>
                         <outlet property="assessmentNotesLabel" destination="iz3-Kd-YTp" id="z7Y-Ci-qDa"/>
                         <outlet property="detailTableView" destination="T0d-OM-T2c" id="TDv-MJ-EC5"/>
+                        <outlet property="editTaskButton" destination="OXU-4D-N2F" id="IPU-GC-zW4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
@@ -408,6 +410,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="editAssessmentButton" destination="Vhf-sf-2Ac" id="gvL-gY-Ymf"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>

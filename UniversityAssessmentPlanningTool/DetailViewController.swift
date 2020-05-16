@@ -18,6 +18,8 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
     @IBOutlet weak var assessmentCompletionBar: CircularProgressBar!
     @IBOutlet weak var assessmentDaysLeft: CircularProgressBar!
     @IBOutlet weak var detailTableView: UITableView!
+    @IBOutlet weak var addTaskButton: UIBarButtonItem!
+    @IBOutlet weak var editTaskButton: UIBarButtonItem!
     
     let calculations: Calculations = Calculations()
     let colours: Colours = Colours()
@@ -32,6 +34,8 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         //TODO remove
         managedObjectContext = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext;        // Do any additional setup after loading the view.
         configureView()
+        disableDetailView()
+        editTaskButton.isEnabled = false
     }
     
     func configureView() {
@@ -195,7 +199,7 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
 //        fetchRequest.predicate = predicate
         
         // Edit the sort key as appropriate.
-        let sortDescriptor = NSSortDescriptor(key: "taskName", ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: "taskDueDate", ascending: true)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         
@@ -256,6 +260,22 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        editTaskButton.isEnabled = true
+    }
+    
+//    func tableView(_ tableView: UITableView, section: Int) -> Int {
+//        let sectionInfo = fetchedResultsController.sections![section]
+//
+//
+//        if sectionInfo.numberOfObjects == 0 {
+////            editTaskButton.isEnabled = false
+////            taskTable.setEmptyMessage("No tasks available for this Project", UIColor.black)
+//        }
+//
+//        return sectionInfo.numberOfObjects
+//    }
+    
     func setDueDateCell(date: Date) -> String {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: date)
@@ -283,6 +303,23 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
             self.performSegue(withIdentifier: "showDetail", sender: empty)
 
         }
+    }
+    
+    func disableDetailView() {
+        if assessment == nil {
+                    assessmentNameLabel.isHidden = true
+                    assessmentNotesLabel.isHidden = true
+                    assessmentCompletionBar.isHidden = true
+                    assessmentDaysLeft.isHidden = true
+                    detailTableView.isEditing = true
+            addTaskButton.isEnabled = false
+            editTaskButton.isEnabled = false
+        //            editTaskButton.isEnabled = false
+        //            addToCalendarButton.isEnabled = false
+        //            taskTable.setEmptyMessage("Add a new Project to manage Tasks", UIColor.black)
+
+                }
+                
     }
     
 

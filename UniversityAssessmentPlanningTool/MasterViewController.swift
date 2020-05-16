@@ -18,6 +18,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     let dateFormatter = DateFormatter()
     //    var assessments: [NSManagedObject] = []
     
+    @IBOutlet weak var editAssessmentButton: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -32,7 +33,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
-        
+        editAssessmentButton.isEnabled = false
         autoSelectTableRow()
         
         
@@ -123,6 +124,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     override func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
         autoSelectTableRow()
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        editAssessmentButton.isEnabled = true
     }
     
     //    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
