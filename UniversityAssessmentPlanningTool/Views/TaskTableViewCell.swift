@@ -31,9 +31,11 @@ class TaskTableViewCell: UITableViewCell {
     func setBars(startDate: Date, dueDate: Date, completion: Int) {
         
         let remainingDaysPercentage = calculations.getRemainingTimePercentage(startDate, end: dueDate)
+//        let remainingDaysPercentage = -216
         
         DispatchQueue.main.async {
             let colours = self.colours.getProgressGradient(completion)
+            self.taskCompletionBar?.customSubtitle = "Completed"
             self.taskCompletionBar.startGradientColor = colours[0]
             self.taskCompletionBar.endGradientColor = colours[1]
             self.taskCompletionBar.progress = CGFloat(completion) / 100
@@ -41,6 +43,7 @@ class TaskTableViewCell: UITableViewCell {
         
         DispatchQueue.main.async {
             let colours = self.colours.getProgressGradient(remainingDaysPercentage, negative: true)
+//            print(remainingDaysPercentage)
             self.taskDaysLeftBar.startGradientColor = colours[0]
             self.taskDaysLeftBar.endGradientColor = colours[1]
             self.taskDaysLeftBar.progress = CGFloat(remainingDaysPercentage) / 100

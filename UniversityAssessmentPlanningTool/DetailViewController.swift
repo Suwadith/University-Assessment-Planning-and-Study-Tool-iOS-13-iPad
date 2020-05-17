@@ -68,6 +68,8 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
             self.assessmentCompletionBar?.progress = CGFloat(assessmentProgress) / 100
         }
         
+            
+            
         DispatchQueue.main.async {
             let colours = self.colours.getProgressGradient(daysLeftAsessment, negative: true)
             self.assessmentDaysLeft?.customTitle = "\(daysRemaining)"
@@ -134,6 +136,8 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         cell.taskDueDateLabel.text = "Due: " + setDueDateCell(date: task.taskDueDate!)
         cell.taskDaysLeftLabel.text = "Days Left: " + String(setDaysLeftLabelCell(date: task.taskDueDate!))
         cell.setBars(startDate: task.taskStartDate!, dueDate: task.taskDueDate!, completion: Int(task.taskCompletion))
+//        print(task.taskStartDate?.description)
+//        print(task.taskDueDate?.description)
 //        cell.assessmentNameLabel.text = assessment.assessmentName
 //        cell.assessmentValueLabel.text = String(assessment.asssessmentValue)
 //        cell.assessmentMarkLabel.text = String(assessment.asssessmentMarkAwarded)
@@ -250,9 +254,10 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         case .move:
             configureCell(detailTableView.cellForRow(at: indexPath!)! as! TaskTableViewCell, withEvent: anObject as! Task, index: indexPath!.row)
             detailTableView.moveRow(at: indexPath!, to: newIndexPath!)
-        configureView()
+        
         }
 //        autoSelectTableRow()
+        configureView()
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

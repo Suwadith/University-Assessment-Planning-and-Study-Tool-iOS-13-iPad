@@ -45,14 +45,14 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         let currentDate = Date()
         
         var startDateComponent = DateComponents()
-        startDateComponent.minute = 30
+        startDateComponent.minute = 1
 
 
         taskStartDatePicker.minimumDate = task?.taskStartDate
         taskStartDatePicker.maximumDate = selectedAssessment?.asssessmentDueDate
         
         var dueDateComponent = DateComponents()
-        dueDateComponent.minute = 60
+        dueDateComponent.minute = 31
         let dueDate = Calendar.current.date(byAdding: dueDateComponent, to: currentDate)!
 
 

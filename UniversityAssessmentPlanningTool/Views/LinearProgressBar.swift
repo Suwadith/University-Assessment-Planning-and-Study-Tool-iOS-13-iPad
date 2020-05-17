@@ -67,6 +67,7 @@ class LinearProgressBar: UIView {
         
         shapeLayer.strokeColor = strokeColor
         shapeLayer.fillColor = fillColor
+//        print(fillColor)
         shapeLayer.lineWidth = lineWidth
         shapeLayer.lineCap = .round
         

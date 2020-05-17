@@ -42,7 +42,7 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
         let currentDate = Date()
         
         var startDateComponent = DateComponents()
-        startDateComponent.minute = 30
+        startDateComponent.minute = 1
         let startDate = Calendar.current.date(byAdding: startDateComponent, to: currentDate)!
         let strStartDate = dateFormatter.string(from: startDate)
         taskStartDateLabel.text = strStartDate
@@ -50,7 +50,7 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
         taskStartDatePicker.maximumDate = selectedAssessment?.asssessmentDueDate
         
         var dueDateComponent = DateComponents()
-        dueDateComponent.minute = 60
+        dueDateComponent.minute = 31
         let dueDate = Calendar.current.date(byAdding: dueDateComponent, to: currentDate)!
         let strDueDate = dateFormatter.string(from: dueDate)
         taskDueDateLabel.text = strDueDate
