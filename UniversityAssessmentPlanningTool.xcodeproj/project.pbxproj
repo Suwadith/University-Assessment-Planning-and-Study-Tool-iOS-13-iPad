@@ -33,6 +33,7 @@
 		14B995E424708036008E054D /* Assessment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B995E024708036008E054D /* Assessment+CoreDataProperties.swift */; };
 		14BE47F1246EB4ED00977803 /* EditTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BE47F0246EB4ED00977803 /* EditTaskViewController.swift */; };
 		14BE47FC246EFCF900977803 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BE47FB246EFCF900977803 /* TaskTableViewCell.swift */; };
+		14C7CC2F2471300700FDEAD2 /* UIViewController+HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C7CC2E2471300700FDEAD2 /* UIViewController+HideKeyboard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		14B995E024708036008E054D /* Assessment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Assessment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		14BE47F0246EB4ED00977803 /* EditTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewController.swift; sourceTree = "<group>"; };
 		14BE47FB246EFCF900977803 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
+		14C7CC2E2471300700FDEAD2 /* UIViewController+HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+HideKeyboard.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 				14A40A30246C267D00D272AB /* DateFormatter+Styling.swift */,
 				14A40A3B246C6C7000D272AB /* UIViewController+Alerts.swift */,
 				14A40A3F246D146500D272AB /* UITableView.swift */,
+				14C7CC2E2471300700FDEAD2 /* UIViewController+HideKeyboard.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				14911147246D8760001CBD82 /* Reminder.swift in Sources */,
 				14A40A3A246C38C100D272AB /* AssessmentTableViewCell.swift in Sources */,
 				14B995E124708036008E054D /* Task+CoreDataClass.swift in Sources */,
+				14C7CC2F2471300700FDEAD2 /* UIViewController+HideKeyboard.swift in Sources */,
 				14BE47F1246EB4ED00977803 /* EditTaskViewController.swift in Sources */,
 				14A7B1AC2469EC3A007FDD85 /* UniversityAssessmentPlanningTool.xcdatamodeld in Sources */,
 				14A7B1B22469EC3A007FDD85 /* DetailViewController.swift in Sources */,

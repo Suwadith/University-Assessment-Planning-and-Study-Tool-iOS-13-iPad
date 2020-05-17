@@ -5,12 +5,14 @@
 //  Created by Suwadith on 5/16/20.
 //  Copyright © 2020 Suwadith. All rights reserved.
 //
+// Source: https://github.com/brionmario/project-planner-ios
 
 import Foundation
 
 public class Calculations {
     let now = Date()
     
+    /// Calculates date difference between start and the end date
     public func getDateDiff(_ start: Date, end: Date) -> Int {
         let currentCalendar = Calendar.current
         guard let start = currentCalendar.ordinality(of: .day, in: .era, for: start) else {
@@ -22,6 +24,7 @@ public class Calculations {
         return end - start
     }
     
+    /// Calulcates remaining time percentage
     public func getRemainingTimePercentage(_ start: Date, end: Date) -> Int {
         let elapsed = getTimeDiffInSeconds(start, end: end)
         let remaining = getTimeDiffInSeconds(now, end: end)
@@ -31,12 +34,11 @@ public class Calculations {
         
         if elapsed > 0 {
             percentage = Int(100 - ((remaining / elapsed) * 100))
-//            print(percentage)
         }
-        print(percentage)
         return percentage
     }
     
+    /// Calculates the time difference in seconds
     public func getTimeDiffInSeconds(_ start: Date, end: Date) -> Double {
         let difference: TimeInterval? = end.timeIntervalSince(start)
 
@@ -46,6 +48,7 @@ public class Calculations {
         
         return Double(difference!)
     }
+    
     
     public func getTimeDiff(_ start: Date, end: Date) -> (Int, Int, Int) {
         let difference: TimeInterval? = end.timeIntervalSince(start)
@@ -77,6 +80,7 @@ public class Calculations {
         return (daysLeft, hoursLeft, minutesLeft)
     }
     
+    /// Calcuates the whole assessment completion percentage (Average of all the tasks' progress)
     public func getAssessmentProgress(_ tasks: [Task]) -> Int {
         var progressTotal: Float = 0
         var progress: Int = 0

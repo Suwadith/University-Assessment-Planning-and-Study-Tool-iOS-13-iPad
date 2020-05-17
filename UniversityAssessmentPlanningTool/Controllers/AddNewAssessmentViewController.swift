@@ -46,7 +46,7 @@ class AddNewAssessmentViewController: UIViewController {
         
 
         eventStore.requestAccess(to: .event, completion: {_,_ in })
-    
+        hideKeyboardWhenTappedAround()
 
         // Do any additional setup after loading the view.
     }
@@ -127,5 +127,6 @@ class AddNewAssessmentViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
 
 }

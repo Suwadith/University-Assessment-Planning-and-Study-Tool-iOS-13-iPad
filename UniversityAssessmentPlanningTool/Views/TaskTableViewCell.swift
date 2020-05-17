@@ -5,6 +5,7 @@
 //  Created by Suwadith on 5/15/20.
 //  Copyright © 2020 Suwadith. All rights reserved.
 //
+// Source: https://github.com/brionmario/project-planner-ios
 
 import UIKit
 
@@ -28,11 +29,12 @@ class TaskTableViewCell: UITableViewCell {
         // Initialization code
     }
     
+    /// Initializes the graphical linear progress bar and the circular progress bars of a given task
     func setBars(startDate: Date, dueDate: Date, completion: Int) {
         
         let remainingDaysPercentage = calculations.getRemainingTimePercentage(startDate, end: dueDate)
-//        let remainingDaysPercentage = -216
         
+        /// Task completion circular progress bar
         DispatchQueue.main.async {
             let colours = self.colours.getProgressGradient(completion)
             self.taskCompletionBar?.customSubtitle = "Completed"
@@ -41,20 +43,14 @@ class TaskTableViewCell: UITableViewCell {
             self.taskCompletionBar.progress = CGFloat(completion) / 100
         }
         
+        /// Remaining time to complete a given task (Linear progress bar)
         DispatchQueue.main.async {
             let colours = self.colours.getProgressGradient(remainingDaysPercentage, negative: true)
-//            print(remainingDaysPercentage)
             self.taskDaysLeftBar.startGradientColor = colours[0]
             self.taskDaysLeftBar.endGradientColor = colours[1]
             self.taskDaysLeftBar.progress = CGFloat(remainingDaysPercentage) / 100
         }
     }
     
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
 
 }

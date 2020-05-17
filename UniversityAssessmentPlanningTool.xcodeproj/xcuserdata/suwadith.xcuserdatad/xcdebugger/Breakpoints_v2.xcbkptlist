@@ -307,8 +307,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "14"
             endingLineNumber = "14"
-            landmarkName = "getDateDiff(_:end:)"
-            landmarkType = "7">
+            landmarkName = "Calculations"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -323,7 +323,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "25"
             endingLineNumber = "25"
-            landmarkName = "getRemainingTimePercentage(_:end:)"
+            landmarkName = "getDateDiff(_:end:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -371,8 +371,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "26"
             endingLineNumber = "26"
-            landmarkName = "getRemainingTimePercentage(_:end:)"
-            landmarkType = "7">
+            landmarkName = "Calculations"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -387,8 +387,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "27"
             endingLineNumber = "27"
-            landmarkName = "getRemainingTimePercentage(_:end:)"
-            landmarkType = "7">
+            landmarkName = "Calculations"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -403,8 +403,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
             endingLineNumber = "24"
-            landmarkName = "Calculations"
-            landmarkType = "3">
+            landmarkName = "getDateDiff(_:end:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
