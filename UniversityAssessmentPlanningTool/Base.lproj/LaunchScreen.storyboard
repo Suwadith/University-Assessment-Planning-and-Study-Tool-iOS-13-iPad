@@ -14,7 +14,35 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Q03-lz-rd8">
+                                <rect key="frame" x="327" y="397.5" width="712" height="229"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="LaG-g4-WA7">
+                                        <rect key="frame" x="0.0" y="0.0" width="712" height="167"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="University Assessment Planning &amp; Study Tool" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BVX-tY-1Pi">
+                                        <rect key="frame" x="0.0" y="187" width="712" height="42"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="35"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© Suwadith Srithar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lw1-0u-h2I">
+                                <rect key="frame" x="600.5" y="980" width="165" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Q03-lz-rd8" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="8zk-m6-lat"/>
+                            <constraint firstItem="Lw1-0u-h2I" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="KzZ-Oz-tzU"/>
+                            <constraint firstItem="Lw1-0u-h2I" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="LEn-AF-I09"/>
+                            <constraint firstItem="Q03-lz-rd8" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="uBY-ex-57I"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -23,4 +51,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logo" width="167" height="167"/>
+    </resources>
 </document>
