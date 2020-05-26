@@ -29,4 +29,16 @@ extension UITextField {
         return isNumeric
     }
     
+    func checkIfMakrsWithinRange() -> Bool {
+        
+        var isWithinRange = true
+        
+        let input = Int(self.text!)
+        
+        if input! < 0 || input! > 100 {
+            isWithinRange = false
+        }
+        return isWithinRange
+    }
+    
 }
