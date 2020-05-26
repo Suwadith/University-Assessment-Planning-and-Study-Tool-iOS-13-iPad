@@ -11,6 +11,7 @@ import UIKit
 
 extension UITextField {
     
+    /// Makes sure the Marks and Value input fields are using numeric inputs
     func checkIfNumeric() -> Bool {
         
         let numbersSet = CharacterSet(charactersIn: "0123456789")
@@ -29,6 +30,8 @@ extension UITextField {
         return isNumeric
     }
     
+    
+    /// Makes sure that the Marks and Value input fields have valid range of numbers
     func checkIfMakrsWithinRange() -> Bool {
         
         var isWithinRange = true
