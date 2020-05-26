@@ -29,23 +29,17 @@ class EditAssessmentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dateFormatter.styleDate()
+        
+        /// Makes sure the assessment due date is atleast 30 miniutes from now
         let currentDate = Date()
         var dateComponent = DateComponents()
         dateComponent.minute = 30
         let futureDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)!
         let strDate = dateFormatter.string(from: futureDate)
         selectedDueDateLable.text = strDate
-        
         dueDatePicker.minimumDate = futureDate
         
         configureView()
-        
-        
-        //        let date = Date()
-        //        let strDate = dateFormatter.string(from: date)
-        //        selectedDueDateLable.text = strDate
-        
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,9 +47,8 @@ class EditAssessmentViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    
+    /// Populates the Assessment cells according to their relevant attributes
     func configureView() {
-        // Update the user interface for the detail item.
         if let detail = assessment {
             if let moduleName = moduleNameField {
                 moduleName.text = detail.asssessmentModuleName
@@ -74,16 +67,12 @@ class EditAssessmentViewController: UIViewController {
             }
             if let calendarSwitch = addToCalendarSwitch {
                 calendarSwitch.isOn = detail.asssessmentDueReminder
-                if calendarSwitch.isOn {
-//                    print(detail.assessmentReminderIdentifier!)
-                }
             }
             if let marks = marksAwardedField {
                 marks.text = String(detail.asssessmentMarkAwarded)
             }
             if let dueDateLabel = selectedDueDateLable {
                 dueDateLabel.text = dateFormatter.string(from: detail.asssessmentDueDate!)
-//                print(detail.asssessmentDueDate!)
             }
             if let dueDate = dueDatePicker {
                 dueDate.date = detail.asssessmentDueDate!
@@ -91,39 +80,37 @@ class EditAssessmentViewController: UIViewController {
         }
     }
     
-    
+    /// Populates the Assessment cells if assessment data is available within the core data DB
     var assessment: Assessment? {
         didSet {
-            // Update the view.
             configureView()
         }
     }
     
     
-    
+    /// Editing assessment data
     @IBAction func onUpdate(_ sender: Any) {
+        
+        /// Makes sure the needed input fields are not empty while creating a new Assessment entry
         if moduleNameField.text?.isEmpty == false && assessmentNameField.text?.isEmpty == false && valuePercentageField.text?.isEmpty == false
             && marksAwardedField.text?.isEmpty == false {
             
+            /// Makes sure the number related input fields are not holding irrelavant characters
             if valuePercentageField.checkIfNumeric() != false && marksAwardedField.checkIfNumeric() != false {
                 
+                /// Makes sure the input values are within the range of 0-100
                 if valuePercentageField.checkIfMakrsWithinRange() != false && marksAwardedField.checkIfMakrsWithinRange() != false {
                     
                     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                         return
                     }
                     
-                    // 1
                     let managedContext = appDelegate.persistentContainer.viewContext
                     
-                    // 2
-                    //        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Assessment")
-                    //
-                    //        fetchRequest.predicate = NSPredicate(format: "assessmentName = ", "")
-                    
+                    /// Copies the selected Assessment Object
                     let object = assessment!
                     
-                    // 3
+                    /// Updates the copied object with the new edited Assessment field values
                     object.setValue(moduleNameField.text!, forKeyPath: "asssessmentModuleName")
                     object.setValue(assessmentNameField.text!, forKeyPath: "assessmentName")
                     object.setValue(Int(levelSegment.titleForSegment(at: levelSegment.selectedSegmentIndex)!), forKeyPath: "asssessmentLevel")
@@ -134,30 +121,22 @@ class EditAssessmentViewController: UIViewController {
                     object.setValue(assessment?.assessmentStartDate, forKeyPath: "assessmentStartDate")
                     object.setValue(dueDatePicker.date, forKeyPath: "asssessmentDueDate")
                     
-                    
-                    
-                    //            print(reminderIdentifier)
-                    
-                    
-                    // 4
                     do {
-                        
-                        //                print(object.assessmentReminderIdentifier!)
-                        
+                        /// Checks if the Assessment has already been added to the calender and deletes if it already does
                         if object.assessmentReminderIdentifier != "" {
                             let reminder = Reminder()
                             reminder.deleteEvent(eventIdentifier: object.assessmentReminderIdentifier!)
                             object.setValue("", forKey: "assessmentReminderIdentifier")
                         }
                         
-                        //                sleep(1)
+                        /// If reminder option is choosen then the new reminder date is added to the calendar
                         if addToCalendarSwitch.isOn {
                             let reminderIdentifier = addToCalendar(calendarSwitch: addToCalendarSwitch.isOn, assessmentName: assessmentNameField.text!, dueDate: dueDatePicker.date)
                             object.setValue(reminderIdentifier, forKey: "assessmentReminderIdentifier")
                         }
                         
+                        /// Saves the modified Assessment Object
                         try managedContext.save()
-                        //                assessments.append(object)
                         dismissPopOver()
                     } catch let error as NSError {
                         print("Could not save. \(error), \(error.userInfo)")
@@ -201,30 +180,21 @@ class EditAssessmentViewController: UIViewController {
 //
 //    }
     
+    /// Saves a reminder if the user chooses the option
     func addToCalendar(calendarSwitch: Bool, assessmentName: String, dueDate: Date) -> String {
         var reminderIdentifier = ""
         if calendarSwitch {
             let reminder = Reminder()
             reminderIdentifier = reminder.createEvent(title: assessmentName, date: dueDate)
-            //            print(reminderIdentifier)
         }
         return reminderIdentifier
     }
     
+    /// While scrolling DatePicker updates the text date value appropriately
     @IBAction func onDateChange(_ sender: Any) {
         
         let strDate = dateFormatter.string(from: dueDatePicker.date)
         selectedDueDateLable.text = strDate
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }
