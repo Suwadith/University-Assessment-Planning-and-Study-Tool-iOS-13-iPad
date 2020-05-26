@@ -234,6 +234,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
+        autoSelectTableRow()
     }
     
     func autoSelectTableRow() {

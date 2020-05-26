@@ -34,7 +34,7 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         //TODO remove
         managedObjectContext = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext;        // Do any additional setup after loading the view.
         configureView()
-        disableDetailView()
+//        disableDetailView()
         editTaskButton.isEnabled = false
     }
     
@@ -151,6 +151,24 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
+        
+        if assessment == nil {
+            assessmentNameLabel.isHidden = true
+            assessmentNotesLabel.isHidden = true
+            assessmentCompletionBar.isHidden = true
+            assessmentDaysLeft.isHidden = true
+            detailTableView.isEditing = true
+            addTaskButton.isEnabled = false
+            editTaskButton.isEnabled = false
+            detailTableView.setEmptyMessage("Add a new Assessment to manage Tasks", UIColor.black)
+            //            editTaskButton.isEnabled = false
+            //            addToCalendarButton.isEnabled = false
+            //            taskTable.setEmptyMessage("Add a new Project to manage Tasks", UIColor.black)
+            
+        }else if sectionInfo.numberOfObjects == 0 {
+            detailTableView.setEmptyMessage("No tasks available for this Assessment", UIColor.black)
+        }
+        
         return sectionInfo.numberOfObjects
     }
     
@@ -310,22 +328,23 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         }
     }
     
-    func disableDetailView() {
-        if assessment == nil {
-                    assessmentNameLabel.isHidden = true
-                    assessmentNotesLabel.isHidden = true
-                    assessmentCompletionBar.isHidden = true
-                    assessmentDaysLeft.isHidden = true
-                    detailTableView.isEditing = true
-            addTaskButton.isEnabled = false
-            editTaskButton.isEnabled = false
-        //            editTaskButton.isEnabled = false
-        //            addToCalendarButton.isEnabled = false
-        //            taskTable.setEmptyMessage("Add a new Project to manage Tasks", UIColor.black)
-
-                }
-                
-    }
+//    func disableDetailView() {
+//        if assessment == nil {
+//            assessmentNameLabel.isHidden = true
+//            assessmentNotesLabel.isHidden = true
+//            assessmentCompletionBar.isHidden = true
+//            assessmentDaysLeft.isHidden = true
+//            detailTableView.isEditing = true
+//            addTaskButton.isEnabled = false
+//            editTaskButton.isEnabled = false
+//            detailTableView.setEmptyMessage("Add a new Assessment to manage Tasks", UIColor.black)
+//            //            editTaskButton.isEnabled = false
+//            //            addToCalendarButton.isEnabled = false
+//            //            taskTable.setEmptyMessage("Add a new Project to manage Tasks", UIColor.black)
+//
+//        }
+//
+//    }
     
 
 }

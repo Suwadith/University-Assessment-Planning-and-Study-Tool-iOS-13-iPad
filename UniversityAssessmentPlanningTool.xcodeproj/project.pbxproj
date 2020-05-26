@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		142BBC6C247D5D3B006DA2B2 /* UITextField+Numeric+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142BBC6B247D5D3B006DA2B2 /* UITextField+Numeric+Validation.swift */; };
 		14911147246D8760001CBD82 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14911146246D8760001CBD82 /* Reminder.swift */; };
 		14911149246E8CB3001CBD82 /* AddNewTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14911148246E8CB3001CBD82 /* AddNewTaskViewController.swift */; };
 		14A40A31246C267D00D272AB /* DateFormatter+Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A40A30246C267D00D272AB /* DateFormatter+Styling.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		142BBC6B247D5D3B006DA2B2 /* UITextField+Numeric+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Numeric+Validation.swift"; sourceTree = "<group>"; };
 		14911146246D8760001CBD82 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		14911148246E8CB3001CBD82 /* AddNewTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTaskViewController.swift; sourceTree = "<group>"; };
 		14A40A30246C267D00D272AB /* DateFormatter+Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Styling.swift"; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				14A40A3B246C6C7000D272AB /* UIViewController+Alerts.swift */,
 				14A40A3F246D146500D272AB /* UITableView.swift */,
 				14C7CC2E2471300700FDEAD2 /* UIViewController+HideKeyboard.swift */,
+				142BBC6B247D5D3B006DA2B2 /* UITextField+Numeric+Validation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				14A7B1A92469EC3A007FDD85 /* AppDelegate.swift in Sources */,
 				14A40A3C246C6C7000D272AB /* UIViewController+Alerts.swift in Sources */,
 				14A7B1AE2469EC3A007FDD85 /* SceneDelegate.swift in Sources */,
+				142BBC6C247D5D3B006DA2B2 /* UITextField+Numeric+Validation.swift in Sources */,
 				14B995CF24702647008E054D /* LinearProgressBar.swift in Sources */,
 				14911149246E8CB3001CBD82 /* AddNewTaskViewController.swift in Sources */,
 				14B995CD2470262F008E054D /* CircularProgressBar.swift in Sources */,

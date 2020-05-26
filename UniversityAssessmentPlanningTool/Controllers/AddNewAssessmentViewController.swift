@@ -43,7 +43,6 @@ class AddNewAssessmentViewController: UIViewController {
         selectedDueDateLable.text = strDate
         
         dueDatePicker.minimumDate = futureDate
-        
 
         eventStore.requestAccess(to: .event, completion: {_,_ in })
         hideKeyboardWhenTappedAround()
@@ -55,43 +54,51 @@ class AddNewAssessmentViewController: UIViewController {
     @IBAction func onSave(_ sender: Any) {
         
         if moduleNameField.text?.isEmpty == false && assessmentNameField.text?.isEmpty == false && valuePercentageField.text?.isEmpty == false
-        && marksAwardedField.text?.isEmpty == false {
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            && marksAwardedField.text?.isEmpty == false {
+            
+            if valuePercentageField.checkIfNumeric() != false && marksAwardedField.checkIfNumeric() != false {
+                
+                
+                
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                     return
-            }
-            
-            // 1
-            let managedContext = appDelegate.persistentContainer.viewContext
-            
-            // 2
-            let entity = NSEntityDescription.entity(forEntityName: "Assessment", in: managedContext)!
-            
-            let assessment = NSManagedObject(entity: entity,
-                                             insertInto: managedContext)
-            
-            // 3
-            assessment.setValue(moduleNameField.text!, forKeyPath: "asssessmentModuleName")
-            assessment.setValue(assessmentNameField.text!, forKeyPath: "assessmentName")
-            assessment.setValue(Int(levelSegment.titleForSegment(at: levelSegment.selectedSegmentIndex)!), forKeyPath: "asssessmentLevel")
-            assessment.setValue(Int(valuePercentageField.text!), forKeyPath: "asssessmentValue")
-            assessment.setValue(notesField.text!, forKeyPath: "asssessmentNotes")
-            assessment.setValue(addToCalendarSwitch.isOn, forKeyPath: "asssessmentDueReminder")
-            assessment.setValue(Int(marksAwardedField.text!), forKeyPath: "asssessmentMarkAwarded")
-            assessment.setValue(currentDate, forKeyPath: "assessmentStartDate")
-            assessment.setValue(dueDatePicker.date, forKeyPath: "asssessmentDueDate")
-            let reminderIdentifier = addToCalendar(calendarSwitch: addToCalendarSwitch.isOn, assessmentName: assessmentNameField.text!, dueDate: dueDatePicker.date)
-//            print(reminderIdentifier)
-            assessment.setValue(reminderIdentifier, forKey: "assessmentReminderIdentifier")
-            
-            
-            // 4
-            do {
-                try managedContext.save()
-//                assessments.append(assessment)
-//                print(assessment)
-                dismissPopOver()
-            } catch let error as NSError {
-                print("Could not save. \(error), \(error.userInfo)")
+                }
+                
+                // 1
+                let managedContext = appDelegate.persistentContainer.viewContext
+                
+                // 2
+                let entity = NSEntityDescription.entity(forEntityName: "Assessment", in: managedContext)!
+                
+                let assessment = NSManagedObject(entity: entity,
+                                                 insertInto: managedContext)
+                
+                // 3
+                assessment.setValue(moduleNameField.text!, forKeyPath: "asssessmentModuleName")
+                assessment.setValue(assessmentNameField.text!, forKeyPath: "assessmentName")
+                assessment.setValue(Int(levelSegment.titleForSegment(at: levelSegment.selectedSegmentIndex)!), forKeyPath: "asssessmentLevel")
+                assessment.setValue(Int(valuePercentageField.text!), forKeyPath: "asssessmentValue")
+                assessment.setValue(notesField.text!, forKeyPath: "asssessmentNotes")
+                assessment.setValue(addToCalendarSwitch.isOn, forKeyPath: "asssessmentDueReminder")
+                assessment.setValue(Int(marksAwardedField.text!), forKeyPath: "asssessmentMarkAwarded")
+                assessment.setValue(currentDate, forKeyPath: "assessmentStartDate")
+                assessment.setValue(dueDatePicker.date, forKeyPath: "asssessmentDueDate")
+                let reminderIdentifier = addToCalendar(calendarSwitch: addToCalendarSwitch.isOn, assessmentName: assessmentNameField.text!, dueDate: dueDatePicker.date)
+                //            print(reminderIdentifier)
+                assessment.setValue(reminderIdentifier, forKey: "assessmentReminderIdentifier")
+                
+                
+                // 4
+                do {
+                    try managedContext.save()
+                    //                assessments.append(assessment)
+                    //                print(assessment)
+                    dismissPopOver()
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            } else {
+                showAlert(title: "Error", msg: "Only nmeric values allowed in value and marks fields")
             }
         } else {
             showAlert(title: "Error", msg: "Only the notes field can be left empty")
@@ -117,6 +124,7 @@ class AddNewAssessmentViewController: UIViewController {
         selectedDueDateLable.text = strDate
     }
     
+
 
     /*
     // MARK: - Navigation

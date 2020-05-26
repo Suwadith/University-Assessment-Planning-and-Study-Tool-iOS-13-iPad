@@ -105,60 +105,63 @@ class EditAssessmentViewController: UIViewController {
         if moduleNameField.text?.isEmpty == false && assessmentNameField.text?.isEmpty == false && valuePercentageField.text?.isEmpty == false
             && marksAwardedField.text?.isEmpty == false {
             
-            
-            
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                return
-            }
-            
-            // 1
-            let managedContext = appDelegate.persistentContainer.viewContext
-            
-            // 2
-            //        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Assessment")
-            //
-            //        fetchRequest.predicate = NSPredicate(format: "assessmentName = ", "")
-            
-            let object = assessment!
-            
-            // 3
-            object.setValue(moduleNameField.text!, forKeyPath: "asssessmentModuleName")
-            object.setValue(assessmentNameField.text!, forKeyPath: "assessmentName")
-            object.setValue(Int(levelSegment.titleForSegment(at: levelSegment.selectedSegmentIndex)!), forKeyPath: "asssessmentLevel")
-            object.setValue(Int(valuePercentageField.text!), forKeyPath: "asssessmentValue")
-            object.setValue(notesField.text!, forKeyPath: "asssessmentNotes")
-            object.setValue(addToCalendarSwitch.isOn, forKeyPath: "asssessmentDueReminder")
-            object.setValue(Int(marksAwardedField.text!), forKeyPath: "asssessmentMarkAwarded")
-            object.setValue(assessment?.assessmentStartDate, forKeyPath: "assessmentStartDate")
-            object.setValue(dueDatePicker.date, forKeyPath: "asssessmentDueDate")
-            
-            
-            
-            //            print(reminderIdentifier)
-            
-            
-            // 4
-            do {
+            if valuePercentageField.checkIfNumeric() != false && marksAwardedField.checkIfNumeric() != false {
                 
-//                print(object.assessmentReminderIdentifier!)
-                
-                if object.assessmentReminderIdentifier != "" {
-                    let reminder = Reminder()
-                    reminder.deleteEvent(eventIdentifier: object.assessmentReminderIdentifier!)
-                    object.setValue("", forKey: "assessmentReminderIdentifier")
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                    return
                 }
                 
-                //                sleep(1)
-                if addToCalendarSwitch.isOn {
-                    let reminderIdentifier = addToCalendar(calendarSwitch: addToCalendarSwitch.isOn, assessmentName: assessmentNameField.text!, dueDate: dueDatePicker.date)
-                    object.setValue(reminderIdentifier, forKey: "assessmentReminderIdentifier")
-                }
+                // 1
+                let managedContext = appDelegate.persistentContainer.viewContext
                 
-                try managedContext.save()
-                //                assessments.append(object)
-                dismissPopOver()
-            } catch let error as NSError {
-                print("Could not save. \(error), \(error.userInfo)")
+                // 2
+                //        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Assessment")
+                //
+                //        fetchRequest.predicate = NSPredicate(format: "assessmentName = ", "")
+                
+                let object = assessment!
+                
+                // 3
+                object.setValue(moduleNameField.text!, forKeyPath: "asssessmentModuleName")
+                object.setValue(assessmentNameField.text!, forKeyPath: "assessmentName")
+                object.setValue(Int(levelSegment.titleForSegment(at: levelSegment.selectedSegmentIndex)!), forKeyPath: "asssessmentLevel")
+                object.setValue(Int(valuePercentageField.text!), forKeyPath: "asssessmentValue")
+                object.setValue(notesField.text!, forKeyPath: "asssessmentNotes")
+                object.setValue(addToCalendarSwitch.isOn, forKeyPath: "asssessmentDueReminder")
+                object.setValue(Int(marksAwardedField.text!), forKeyPath: "asssessmentMarkAwarded")
+                object.setValue(assessment?.assessmentStartDate, forKeyPath: "assessmentStartDate")
+                object.setValue(dueDatePicker.date, forKeyPath: "asssessmentDueDate")
+                
+                
+                
+                //            print(reminderIdentifier)
+                
+                
+                // 4
+                do {
+                    
+                    //                print(object.assessmentReminderIdentifier!)
+                    
+                    if object.assessmentReminderIdentifier != "" {
+                        let reminder = Reminder()
+                        reminder.deleteEvent(eventIdentifier: object.assessmentReminderIdentifier!)
+                        object.setValue("", forKey: "assessmentReminderIdentifier")
+                    }
+                    
+                    //                sleep(1)
+                    if addToCalendarSwitch.isOn {
+                        let reminderIdentifier = addToCalendar(calendarSwitch: addToCalendarSwitch.isOn, assessmentName: assessmentNameField.text!, dueDate: dueDatePicker.date)
+                        object.setValue(reminderIdentifier, forKey: "assessmentReminderIdentifier")
+                    }
+                    
+                    try managedContext.save()
+                    //                assessments.append(object)
+                    dismissPopOver()
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            } else {
+                showAlert(title: "Error", msg: "Only nmeric values allowed in value and marks fields")
             }
         } else {
             showAlert(title: "Error", msg: "Only the notes field can be left empty")
