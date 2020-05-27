@@ -34,13 +34,11 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        
         dateFormatter.styleDate()
-        
         let currentDate = Date()
         
+        /// Makes sure the task start date is atleast 1 miniute from now
+        /// Makes sure the task start date onlly goes upto the assessment due date
         var startDateComponent = DateComponents()
         startDateComponent.minute = 1
         let startDate = Calendar.current.date(byAdding: startDateComponent, to: currentDate)!
@@ -49,6 +47,8 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
         taskStartDatePicker.minimumDate = startDate
         taskStartDatePicker.maximumDate = selectedAssessment?.asssessmentDueDate
         
+        /// Makes sure the task due date is atleast 31 miniute from now
+        /// Makes sure the task due date onlly goes upto the assessment due date
         var dueDateComponent = DateComponents()
         dueDateComponent.minute = 31
         let dueDate = Calendar.current.date(byAdding: dueDateComponent, to: currentDate)!
@@ -57,6 +57,7 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
         taskDueDatePicker.minimumDate = dueDate
         taskDueDatePicker.maximumDate = selectedAssessment?.asssessmentDueDate
         
+        /// Onload requests for calendar access for reminder functionality
         eventStore.requestAccess(to: .event, completion: {_,_ in })
     }
     
@@ -65,51 +66,40 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-    
+    /// Saving new task data
     @IBAction func onSave(_ sender: Any) {
+        
+        /// Makes sure the needed input fields are not empty while creating a new Task entry
         if taskNameField.text?.isEmpty == false && taskNotesField.text?.isEmpty == false {
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
             }
             
-            // 1
             let managedContext = appDelegate.persistentContainer.viewContext
             
-            // 2
             let entity = NSEntityDescription.entity(forEntityName: "Task", in: managedContext)!
             
-            let task = NSManagedObject(entity: entity,
-                                             insertInto: managedContext)
+            /// Initialization of a new Task Core Data Model Object
+            let task = NSManagedObject(entity: entity, insertInto: managedContext)
             
-            // 3
+            /// Setting atrribute values of the Task Object
             task.setValue(taskNameField.text!, forKeyPath: "taskName")
             task.setValue(taskNotesField.text!, forKeyPath: "taskNotes")
             task.setValue(taskReminderSwitch.isOn, forKeyPath: "taskDueReminder")
             task.setValue(taskCompletionSlider.value, forKeyPath: "taskCompletion")
             task.setValue(taskStartDatePicker.date, forKeyPath: "taskStartDate")
             task.setValue(taskDueDatePicker.date, forKeyPath: "taskDueDate")
-           
             let reminderIdentifier = addToCalendar(calendarSwitch: taskReminderSwitch.isOn, taskName: taskNameField.text!, startDate: taskStartDatePicker.date, dueDate: taskDueDatePicker.date)
-//            //            print(reminderIdentifier)
             task.setValue(reminderIdentifier, forKey: "taskReminderIdentifier")
+            
+            /// Creates a relationship between the selected Assessment Object and the newly created Task Object
             selectedAssessment?.addToTasks((task as? Task)!)
             
-            // 4
+
             do {
+                /// Saving the created Task Object
                 try managedContext.save()
-                                tasks.append(task)
-//                print(task)
+                tasks.append(task)
                 dismissPopOver()
             } catch let error as NSError {
                 print("Could not save. \(error), \(error.userInfo)")
@@ -120,30 +110,30 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
         
     }
     
+    /// Saves a reminder if the user chooses the option
     func addToCalendar(calendarSwitch: Bool, taskName: String, startDate: Date, dueDate: Date) -> String {
-            var reminderIdentifier = ""
-            if calendarSwitch {
-                let reminder = Reminder()
-                reminderIdentifier = reminder.createTaskEvent(title: taskName, startDate: startDate, dueDate: dueDate)
-    //            print(reminderIdentifier)
-            }
-            return reminderIdentifier
+        var reminderIdentifier = ""
+        if calendarSwitch {
+            let reminder = Reminder()
+            reminderIdentifier = reminder.createTaskEvent(title: taskName, startDate: startDate, dueDate: dueDate)
         }
+        return reminderIdentifier
+    }
     
     
-    
+    /// While sliding the completion slider updates the completion label
     @IBAction func onSliderChange(_ sender: UISlider) {
         taskCompletionLabel.text = String(Int(sender.value)) + "% Completed"
     }
     
+    /// While scrolling start DatePicker updates the text start date value appropriately
     @IBAction func onStartDateChange(_ sender: Any) {
-        
         let strDate = dateFormatter.string(from: taskStartDatePicker.date)
         taskStartDateLabel.text = strDate
     }
     
+    /// While scrolling due DatePicker updates the text due date value appropriately
     @IBAction func onDueDateChange(_ sender: Any) {
-        
         let strDate = dateFormatter.string(from: taskDueDatePicker.date)
         taskDueDateLabel.text = strDate
     }

@@ -192,7 +192,6 @@ class EditAssessmentViewController: UIViewController {
     
     /// While scrolling DatePicker updates the text date value appropriately
     @IBAction func onDateChange(_ sender: Any) {
-        
         let strDate = dateFormatter.string(from: dueDatePicker.date)
         selectedDueDateLable.text = strDate
     }
