@@ -28,18 +28,18 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
     
     let dateFormatter = DateFormatter()
     let currentDate = Date()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //TODO remove
-        managedObjectContext = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext;        // Do any additional setup after loading the view.
+        managedObjectContext = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
         configureView()
-//        disableDetailView()
+        
+        /// By defaul the Edit Task button is disabled until one of the Assessments is chosen
         editTaskButton.isEnabled = false
     }
     
+    /// Populates the  Assesment Overview Top Panel in the DetailView
     func configureView() {
-        // Update the user interface for the detail item.
         if let detail = assessment {
             if let assessmentName = assessmentNameLabel {
                 assessmentName.text = detail.assessmentName
@@ -48,48 +48,41 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
                 assessmentNotes.text = detail.asssessmentNotes
             }
             
-            
-        let tasks = (detail.tasks!.allObjects as! [Task])
-        let assessmentProgress = calculations.getAssessmentProgress(tasks)
+            let tasks = (detail.tasks!.allObjects as! [Task])
+            let assessmentProgress = calculations.getAssessmentProgress(tasks)
             let daysLeftAsessment = calculations.getRemainingTimePercentage(detail.assessmentStartDate!, end: detail.asssessmentDueDate!)
-//            let daysLeftAsessment = 0
             var daysRemaining = self.calculations.getDateDiff(currentDate, end: detail.asssessmentDueDate!)
-//            var daysRemaining = setDaysLeftLabelCell(date: detail.asssessmentDueDate!)
-        
-        if daysRemaining < 0 {
-            daysRemaining = 0
-        }
-        
-        DispatchQueue.main.async {
-            let colours = self.colours.getProgressGradient(assessmentProgress)
-            self.assessmentCompletionBar?.customSubtitle = "Completed"
-            self.assessmentCompletionBar?.startGradientColor = colours[0]
-            self.assessmentCompletionBar?.endGradientColor = colours[1]
-            self.assessmentCompletionBar?.progress = CGFloat(assessmentProgress) / 100
-        }
-        
             
             
-        DispatchQueue.main.async {
-            let colours = self.colours.getProgressGradient(daysLeftAsessment, negative: true)
-            self.assessmentDaysLeft?.customTitle = "\(daysRemaining)"
-            self.assessmentDaysLeft?.customSubtitle = "Days Left"
-            self.assessmentDaysLeft?.startGradientColor = colours[0]
-            self.assessmentDaysLeft?.endGradientColor = colours[1]
-            self.assessmentDaysLeft?.progress =  CGFloat(daysLeftAsessment) / 100
+            if daysRemaining < 0 {
+                daysRemaining = 0
+            }
+            
+            /// Overall Assessment Completion Cicular Progress Bar Generation
+            DispatchQueue.main.async {
+                let colours = self.colours.getProgressGradient(assessmentProgress)
+                self.assessmentCompletionBar?.customSubtitle = "Completed"
+                self.assessmentCompletionBar?.startGradientColor = colours[0]
+                self.assessmentCompletionBar?.endGradientColor = colours[1]
+                self.assessmentCompletionBar?.progress = CGFloat(assessmentProgress) / 100
+            }
+            
+            /// Assessment Remaining Days Circular Progress Bar Generation
+            DispatchQueue.main.async {
+                let colours = self.colours.getProgressGradient(daysLeftAsessment, negative: true)
+                self.assessmentDaysLeft?.customTitle = "\(daysRemaining)"
+                self.assessmentDaysLeft?.customSubtitle = "Days Left"
+                self.assessmentDaysLeft?.startGradientColor = colours[0]
+                self.assessmentDaysLeft?.endGradientColor = colours[1]
+                self.assessmentDaysLeft?.progress =  CGFloat(daysLeftAsessment) / 100
+            }
         }
-        }
-        
-//        autoSelectTableRow()
-        
-        //detailTableView?.reloadData()
     }
-
+    
+    /// Populates the above overview panel using the selected Assessment Data (Object)
     var assessment: Assessment? {
         didSet {
-            // Update the view.
             configureView()
-            //detailTableView?.reloadData()
         }
     }
     
@@ -97,61 +90,39 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
     // MARK: - Segues
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        /// Segue for creating new Task
         if segue.identifier == "addTask" {
             let controller = (segue.destination as! UINavigationController).topViewController as! AddNewTaskViewController
             controller.selectedAssessment = assessment
-//            if let controller = segue.destination as? UIViewController {
-//                controller.popoverPresentationController!.delegate = self
-//                controller.preferredContentSize = CGSize(width: 320, height: 500)
-//            }
             
+            /// Segue for populating edit Task form fields
         } else if segue.identifier == "editTask" {
-//        print("Edit")
-        if let indexPath = detailTableView.indexPathForSelectedRow {
-            let object = fetchedResultsController.object(at: indexPath)
-//            print(object.taskName!)
-            let controller = (segue.destination as! UINavigationController).topViewController as! EditTaskViewController
-            controller.task = object
-            controller.selectedAssessment = assessment
+            if let indexPath = detailTableView.indexPathForSelectedRow {
+                let object = fetchedResultsController.object(at: indexPath)
+                let controller = (segue.destination as! UINavigationController).topViewController as! EditTaskViewController
+                controller.task = object
+                controller.selectedAssessment = assessment
+            }
+            
         }
-        
-        
-        
-//        if segue.identifier == "editTask" {
-//            if let indexPath = detailTableView.indexPathForSelectedRow {
-//                let object = fetchedResultsController.object(at: indexPath)
-//                let controller = (segue.destination as! UINavigationController).topViewController as! EditTaskViewController
-//                controller. = object as Task
-//                controller.task = selectedProject
-//            }
-//        }
-    }
     }
     
+    /// Creating individual cells of the Task table list
     func configureCell(_ cell: TaskTableViewCell, withEvent task: Task, index: Int) {
-        //        cell.textLabel!.text = assessment.asssessmentModuleName!
         cell.taskNumberLabel.text = "Task: " + String(index+1)
         cell.taskNameLabel.text = task.taskName
         cell.taskNotesLabel.text = task.taskNotes
         cell.taskDueDateLabel.text = "Due: " + setDueDateCell(date: task.taskDueDate!)
         cell.taskDaysLeftLabel.text = "Days Left: " + String(setDaysLeftLabelCell(date: task.taskDueDate!))
         cell.setBars(startDate: task.taskStartDate!, dueDate: task.taskDueDate!, completion: Int(task.taskCompletion))
-//        print(task.taskStartDate?.description)
-//        print(task.taskDueDate?.description)
-//        cell.assessmentNameLabel.text = assessment.assessmentName
-//        cell.assessmentValueLabel.text = String(assessment.asssessmentValue)
-//        cell.assessmentMarkLabel.text = String(assessment.asssessmentMarkAwarded)
-//        cell.assessmentDueDateLabel.text = dateFormatter.string(from: assessment.asssessmentDueDate!)
     }
-    
-//    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
-//        autoSelectTableRow()
-//    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = fetchedResultsController.sections![section]
         
+        /// Hiding detail view sections if No Assessment is chosen or No Assessment is Available (Displays a message too)
         if assessment == nil {
             assessmentNameLabel.isHidden = true
             assessmentNotesLabel.isHidden = true
@@ -161,9 +132,6 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
             addTaskButton.isEnabled = false
             editTaskButton.isEnabled = false
             detailTableView.setEmptyMessage("Add a new Assessment to manage Tasks", UIColor.black)
-            //            editTaskButton.isEnabled = false
-            //            addToCalendarButton.isEnabled = false
-            //            taskTable.setEmptyMessage("Add a new Project to manage Tasks", UIColor.black)
             
         }else if sectionInfo.numberOfObjects == 0 {
             detailTableView.setEmptyMessage("No tasks available for this Assessment", UIColor.black)
@@ -172,17 +140,15 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         return sectionInfo.numberOfObjects
     }
     
+    /// Populating Task list of cells using custom TaskTableViewCell cass
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Detail Table View Cell", for: indexPath) as! TaskTableViewCell
         let task = fetchedResultsController.object(at: indexPath)
-//        print(task)
-//        cell.taskNameLabel?.text = task.taskName!
         configureCell(cell, withEvent: task, index: indexPath.row)
-        
-        //        configureCell(cell, withEvent: assessment)
         return cell
     }
     
+    /// After deleting a Task updates the Core Data Storage
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let context = fetchedResultsController.managedObjectContext
@@ -191,15 +157,13 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
             do {
                 try context.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
     }
     
-    
+    /// Fetching Task Results
     var fetchedResultsController: NSFetchedResultsController<Task> {
         if _fetchedResultsController != nil {
             return _fetchedResultsController!
@@ -207,26 +171,20 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
         
-        // Set the batch size to a suitable number.
+        /// Fetch Size
         fetchRequest.fetchBatchSize = 20
         
+        /// Fetching the tasks relevant to the selected Assessment
         if assessment != nil {
-            // Setting a predicate
             let predicate = NSPredicate(format: "%K == %@", "assessment", assessment!)
-            //let predicate = NSPredicate(format: "taskName == 123")
-           fetchRequest.predicate = predicate
+            fetchRequest.predicate = predicate
         }
         
-//        let predicate = NSPredicate(format: "taskName == 1234")
-//        fetchRequest.predicate = predicate
-        
-        // Edit the sort key as appropriate.
+        /// Sorting key
         let sortDescriptor = NSSortDescriptor(key: "taskDueDate", ascending: true)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        // Edit the section name key path and cache name if appropriate.
-        // nil for section name key path means "no sections".
         let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "\(UUID().uuidString)-task")
         aFetchedResultsController.delegate = self
         _fetchedResultsController = aFetchedResultsController
@@ -234,13 +192,9 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         do {
             try _fetchedResultsController!.performFetch()
         } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             let nserror = error as NSError
             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
         }
-//        autoSelectTableRow()
-        
         return _fetchedResultsController!
     }
     
@@ -272,38 +226,26 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         case .move:
             configureCell(detailTableView.cellForRow(at: indexPath!)! as! TaskTableViewCell, withEvent: anObject as! Task, index: indexPath!.row)
             detailTableView.moveRow(at: indexPath!, to: newIndexPath!)
-        
         }
-//        autoSelectTableRow()
         configureView()
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         detailTableView.endUpdates()
-    
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         editTaskButton.isEnabled = true
     }
     
-//    func tableView(_ tableView: UITableView, section: Int) -> Int {
-//        let sectionInfo = fetchedResultsController.sections![section]
-//
-//
-//        if sectionInfo.numberOfObjects == 0 {
-////            editTaskButton.isEnabled = false
-////            taskTable.setEmptyMessage("No tasks available for this Project", UIColor.black)
-//        }
-//
-//        return sectionInfo.numberOfObjects
-//    }
-    
+    /// Date Stying YYYY-MM-DD
     func setDueDateCell(date: Date) -> String {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: date)
     }
     
+    /// Calculating days left
     func setDaysLeftLabelCell(date: Date) -> Int {
         var daysLeft = Calendar.current.dateComponents([.day], from: currentDate, to: date).day!
         if daysLeft < 0 {
@@ -312,11 +254,12 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         return daysLeft
     }
     
+    /// On call selects a Task cell autmatically (If available)
     func autoSelectTableRow() {
         let indexPath = IndexPath(row: 0, section: 0)
         if detailTableView.hasRowAtIndexPath(indexPath: indexPath as NSIndexPath) {
             detailTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
-
+            
             if let indexPath = detailTableView.indexPathForSelectedRow {
                 let object = fetchedResultsController.object(at: indexPath)
                 self.performSegue(withIdentifier: "showDetail", sender: object)
@@ -324,28 +267,8 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
         } else {
             let empty = {}
             self.performSegue(withIdentifier: "showDetail", sender: empty)
-
+            
         }
     }
-    
-//    func disableDetailView() {
-//        if assessment == nil {
-//            assessmentNameLabel.isHidden = true
-//            assessmentNotesLabel.isHidden = true
-//            assessmentCompletionBar.isHidden = true
-//            assessmentDaysLeft.isHidden = true
-//            detailTableView.isEditing = true
-//            addTaskButton.isEnabled = false
-//            editTaskButton.isEnabled = false
-//            detailTableView.setEmptyMessage("Add a new Assessment to manage Tasks", UIColor.black)
-//            //            editTaskButton.isEnabled = false
-//            //            addToCalendarButton.isEnabled = false
-//            //            taskTable.setEmptyMessage("Add a new Project to manage Tasks", UIColor.black)
-//
-//        }
-//
-//    }
-    
-
 }
 
