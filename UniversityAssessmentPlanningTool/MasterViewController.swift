@@ -16,51 +16,39 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     var managedObjectContext: NSManagedObjectContext? = nil
     
     let dateFormatter = DateFormatter()
-    //    var assessments: [NSManagedObject] = []
     
     @IBOutlet weak var editAssessmentButton: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        //        navigationItem.leftBarButtonItem = editButtonItem
-        //        editButtonItem.title = "Delete"
-        
         dateFormatter.styleDate()
         
-        //        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-        //        navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+        
+        /// By defaul the Edit Assessment button is disabled until one of the Assessments is chosen
         editAssessmentButton.isEnabled = false
         autoSelectTableRow()
-        
-        
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         autoSelectTableRow()
         
-        //1
+        
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
         
         let managedContext = appDelegate.persistentContainer.viewContext
         
-        //2
+        /// Retreives all the Assessment data from the COre Data persistant storage
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Assessment")
-        
-        //3
         do {
             let assessments = try managedContext.fetch(fetchRequest)
             for assessment in assessments as! [Assessment] {
-//                print(assessment.assessmentName!)
-                
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
@@ -74,24 +62,22 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        /// Segue for loading detail view with the selected Assessment details (Object)
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let object = fetchedResultsController.object(at: indexPath)
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.assessment = object
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-//                controller.navigationItem.leftItemsSupplementBackButton = true
                 detailViewController = controller
-//                print(object.assessmentName!)
             }
+            
+            /// Segue for edit Assessment popup
         } else if segue.identifier == "editAssessment" {
-//            print("Edit")
             if let indexPath = tableView.indexPathForSelectedRow {
                 let object = fetchedResultsController.object(at: indexPath)
-//                print(object.assessmentName!)
                 let controller = (segue.destination as! UINavigationController).topViewController as! EditAssessmentViewController
                 controller.assessment = object
-                
             }
         }
     }
@@ -107,6 +93,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         return sectionInfo.numberOfObjects
     }
     
+    /// Populating Assesment list of cells using custom AssessmentTableViewCell cass
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Master Table View Cell", for: indexPath) as! AssessmentTableViewCell
         let assessment = fetchedResultsController.object(at: indexPath)
@@ -116,8 +103,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         cell.assessmentMarkLabel?.text = String(assessment.asssessmentMarkAwarded) + "%"
         dateFormatter.dateFormat = "MMM d, yyyy"
         cell.assessmentDueDateLabel?.text = dateFormatter.string(from: assessment.asssessmentDueDate!)
-        
-        //        configureCell(cell, withEvent: assessment)
         return cell
     }
     
@@ -126,35 +111,27 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         autoSelectTableRow()
     }
     
+    /// Upon selecting an Assessment, enables the edit button
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         editAssessmentButton.isEnabled = true
     }
     
-    //    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-    //        // Return false if you do not want the specified item to be editable.
-    //
-    //        return true
-    //    }
-    
-    
+    /// After deleting an Assessment updates the Core Data Storage
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let context = fetchedResultsController.managedObjectContext
             context.delete(fetchedResultsController.object(at: indexPath))
-            
             do {
                 try context.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
     }
     
+    /// Creating individual cells of the Assessmnt table list
     func configureCell(_ cell: AssessmentTableViewCell, withEvent assessment: Assessment) {
-        //        cell.textLabel!.text = assessment.asssessmentModuleName!
         cell.assessmentModuleNameLable.text = assessment.asssessmentModuleName
         cell.assessmentNameLabel.text = assessment.assessmentName
         cell.assessmentValueLabel.text = String(assessment.asssessmentValue)
@@ -164,6 +141,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     // MARK: - Fetched results controller
     
+    /// Fetching Assessment Results
     var fetchedResultsController: NSFetchedResultsController<Assessment> {
         if _fetchedResultsController != nil {
             return _fetchedResultsController!
@@ -171,16 +149,14 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         let fetchRequest: NSFetchRequest<Assessment> = Assessment.fetchRequest()
         
-        // Set the batch size to a suitable number.
+        /// Fetch Size
         fetchRequest.fetchBatchSize = 20
         
-        // Edit the sort key as appropriate.
+        /// Sorting key
         let sortDescriptor = NSSortDescriptor(key: "asssessmentModuleName", ascending: false)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         
-        // Edit the section name key path and cache name if appropriate.
-        // nil for section name key path means "no sections".
         let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext!, sectionNameKeyPath: nil, cacheName: "Master")
         aFetchedResultsController.delegate = self
         _fetchedResultsController = aFetchedResultsController
@@ -188,15 +164,14 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         do {
             try _fetchedResultsController!.performFetch()
         } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             let nserror = error as NSError
             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
         }
         autoSelectTableRow()
         
         return _fetchedResultsController!
-    }    
+    }
+    
     var _fetchedResultsController: NSFetchedResultsController<Assessment>? = nil
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
@@ -222,7 +197,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             tableView.deleteRows(at: [indexPath!], with: .fade)
         case .update:
             configureCell(tableView.cellForRow(at: indexPath!)! as! AssessmentTableViewCell, withEvent: anObject as! Assessment)
-//            print("in")
         case .move:
             configureCell(tableView.cellForRow(at: indexPath!)! as! AssessmentTableViewCell, withEvent: anObject as! Assessment)
             tableView.moveRow(at: indexPath!, to: newIndexPath!)
@@ -237,6 +211,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         autoSelectTableRow()
     }
     
+    /// On call selects an Assessment cell autmatically (If available)
     func autoSelectTableRow() {
         let indexPath = IndexPath(row: 0, section: 0)
         if tableView.hasRowAtIndexPath(indexPath: indexPath as NSIndexPath) {
@@ -252,15 +227,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             
         }
     }
-    
-    /*
-     // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
-     
-     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-     // In the simplest, most efficient, case, reload the table view.
-     tableView.reloadData()
-     }
-     */
     
 }
 
