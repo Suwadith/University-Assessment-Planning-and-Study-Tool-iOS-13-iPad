@@ -47,7 +47,7 @@ class EditAssessmentViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    /// Populates the Assessment cells according to their relevant attributes
+    /// Populates the edit Assessment form fields according to their relevant attributes
     func configureView() {
         if let detail = assessment {
             if let moduleName = moduleNameField {
@@ -80,7 +80,7 @@ class EditAssessmentViewController: UIViewController {
         }
     }
     
-    /// Populates the Assessment cells if assessment data is available within the core data DB
+    /// Populates the edit Assessment form fields if assessment data is clicked and available within the core data DB
     var assessment: Assessment? {
         didSet {
             configureView()
@@ -91,7 +91,7 @@ class EditAssessmentViewController: UIViewController {
     /// Editing assessment data
     @IBAction func onUpdate(_ sender: Any) {
         
-        /// Makes sure the needed input fields are not empty while creating a new Assessment entry
+        /// Makes sure the needed input fields are not empty while editing an Assessment entry
         if moduleNameField.text?.isEmpty == false && assessmentNameField.text?.isEmpty == false && valuePercentageField.text?.isEmpty == false
             && marksAwardedField.text?.isEmpty == false {
             

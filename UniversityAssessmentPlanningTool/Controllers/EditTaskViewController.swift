@@ -34,31 +34,28 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     
     let currentDate = Date()
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
         dateFormatter.styleDate()
-        
         let currentDate = Date()
         
+        /// Makes sure the task start date is atleast 1 miniute from now
+        /// Makes sure the task start date onlly goes upto the assessment due date
         var startDateComponent = DateComponents()
         startDateComponent.minute = 1
-
-
         taskStartDatePicker.minimumDate = task?.taskStartDate
         taskStartDatePicker.maximumDate = selectedAssessment?.asssessmentDueDate
         
+        /// Makes sure the task due date is atleast 31 miniute from now
+        /// Makes sure the task due date onlly goes upto the assessment due date
         var dueDateComponent = DateComponents()
         dueDateComponent.minute = 31
         let dueDate = Calendar.current.date(byAdding: dueDateComponent, to: currentDate)!
-
-
         taskDueDatePicker.minimumDate = dueDate
         taskDueDatePicker.maximumDate = selectedAssessment?.asssessmentDueDate
         
+        /// Onload requests for calendar access for reminder functionality
         eventStore.requestAccess(to: .event, completion: {_,_ in })
         
         configureView()
@@ -69,9 +66,8 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
-    
+    /// Populates the edit Task form fields according to their relevant attributes
     func configureView() {
-        // Update the user interface for the detail item.
         if let detail = task {
             if let taskName = taskNameField {
                 taskName.text = detail.taskName
@@ -103,27 +99,29 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         }
     }
     
+    /// Populates the edit Task form fields if Task data is clicked and available within the core data DB
     var task: Task? {
         didSet {
-            // Update the view.
             configureView()
         }
     }
     
-    
-    
+    /// Editing Task data
     @IBAction func onUpdate(_ sender: Any) {
+        
+        /// Makes sure the needed input fields are not empty while editing an Task entry
         if taskNameField.text?.isEmpty == false && taskNotesField.text?.isEmpty == false {
+            
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
             }
             
-            // 1
             let managedContext = appDelegate.persistentContainer.viewContext
             
+            /// Copies the selected Task Object
             let object = task!
             
-            // 3
+            /// Updates the copied object with the new edited Task field values
             object.setValue(taskNameField.text!, forKeyPath: "taskName")
             object.setValue(taskNotesField.text!, forKeyPath: "taskNotes")
             object.setValue(taskReminderSwitch.isOn, forKeyPath: "taskDueReminder")
@@ -132,69 +130,57 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
             object.setValue(taskDueDatePicker.date, forKeyPath: "taskDueDate")
             
             do {
-                    
-//                print(object.taskDueReminder)
-                
+                /// Checks if the Task has already been added to the calender and deletes if it already does
                 if object.taskReminderIdentifier != "" {
                     let reminder = Reminder()
                     reminder.deleteEvent(eventIdentifier: object.taskReminderIdentifier!)
                     object.setValue("", forKey: "taskReminderIdentifier")
                 }
-                    
-                    
-                    //                sleep(1)
-                    if taskReminderSwitch.isOn {
-                        let reminderIdentifier = addToCalendar(calendarSwitch: taskReminderSwitch.isOn, taskName: taskNameField.text!, startDate: taskStartDatePicker.date, dueDate: taskDueDatePicker.date)
-                        object.setValue(reminderIdentifier, forKey: "taskReminderIdentifier")
-                    }
-                    
-                    try managedContext.save()
-//                    tasks.append(object)
-                    dismissPopOver()
-                } catch let error as NSError {
-                    print("Could not save. \(error), \(error.userInfo)")
+                
+                /// If reminder option is choosen then the new reminder date is added to the calendar
+                if taskReminderSwitch.isOn {
+                    let reminderIdentifier = addToCalendar(calendarSwitch: taskReminderSwitch.isOn, taskName: taskNameField.text!, startDate: taskStartDatePicker.date, dueDate: taskDueDatePicker.date)
+                    object.setValue(reminderIdentifier, forKey: "taskReminderIdentifier")
                 }
-            } else {
-                showAlert(title: "Error", msg: "Only the notes field can be left empty")
+                
+                /// Saves the modified Task Object
+                try managedContext.save()
+                dismissPopOver()
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
             }
+        } else {
+            showAlert(title: "Error", msg: "Only the notes field can be left empty")
+        }
         
         
     }
     
+    /// Saves a reminder if the user chooses the option
     func addToCalendar(calendarSwitch: Bool, taskName: String, startDate: Date, dueDate: Date) -> String {
-            var reminderIdentifier = ""
-            if calendarSwitch {
-                let reminder = Reminder()
-                reminderIdentifier = reminder.createTaskEvent(title: taskName, startDate: startDate, dueDate: dueDate)
-    //            print(reminderIdentifier)
-            }
-            return reminderIdentifier
+        var reminderIdentifier = ""
+        if calendarSwitch {
+            let reminder = Reminder()
+            reminderIdentifier = reminder.createTaskEvent(title: taskName, startDate: startDate, dueDate: dueDate)
         }
+        return reminderIdentifier
+    }
     
+    /// While sliding the completion slider updates the completion label
     @IBAction func onSliderChange(_ sender: UISlider) {
         taskCompletionLabel.text = String(Int(sender.value)) + "% Completed"
     }
     
+    /// While scrolling start DatePicker updates the text start date value appropriately
     @IBAction func onStartDateChange(_ sender: Any) {
-        
         let strDate = dateFormatter.string(from: taskStartDatePicker.date)
         taskStartDateLabel.text = strDate
     }
     
+    /// While scrolling due DatePicker updates the text due date value appropriately
     @IBAction func onDueDateChange(_ sender: Any) {
-        
         let strDate = dateFormatter.string(from: taskDueDatePicker.date)
         taskDueDateLabel.text = strDate
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
