@@ -45,7 +45,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
         var startDateComponent = DateComponents()
         startDateComponent.minute = 1
         taskStartDatePicker.minimumDate = task?.taskStartDate
-        taskStartDatePicker.maximumDate = selectedAssessment?.asssessmentDueDate
+        taskStartDatePicker.maximumDate = selectedAssessment!.asssessmentDueDate! - (30 * 60)
         
         /// Makes sure the task due date is atleast 31 miniutes from now
         /// Makes sure the task due date onlly goes upto the assessment due date
@@ -182,7 +182,7 @@ class EditTaskViewController: UIViewController, UIPopoverPresentationControllerD
     @IBAction func onDueDateChange(_ sender: Any) {
         let strDate = dateFormatter.string(from: taskDueDatePicker.date)
         taskDueDateLabel.text = strDate
-        taskStartDatePicker.maximumDate = taskDueDatePicker.date - (30 * 60)
+//        taskStartDatePicker.maximumDate = taskDueDatePicker.date - (30 * 60)
     }
     
 }
