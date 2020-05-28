@@ -47,7 +47,7 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
         taskStartDatePicker.minimumDate = startDate
         taskStartDatePicker.maximumDate = selectedAssessment?.asssessmentDueDate
         
-        /// Makes sure the task due date is atleast 31 miniute from now
+        /// Makes sure the task due date is atleast 31 miniutes from now
         /// Makes sure the task due date onlly goes upto the assessment due date
         var dueDateComponent = DateComponents()
         dueDateComponent.minute = 31
@@ -130,12 +130,14 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
     @IBAction func onStartDateChange(_ sender: Any) {
         let strDate = dateFormatter.string(from: taskStartDatePicker.date)
         taskStartDateLabel.text = strDate
+        taskDueDatePicker.minimumDate = taskStartDatePicker.date + (30 * 60)
     }
     
     /// While scrolling due DatePicker updates the text due date value appropriately
     @IBAction func onDueDateChange(_ sender: Any) {
         let strDate = dateFormatter.string(from: taskDueDatePicker.date)
         taskDueDateLabel.text = strDate
+        taskStartDatePicker.maximumDate = taskDueDatePicker.date - (30 * 60)
     }
     
 }
