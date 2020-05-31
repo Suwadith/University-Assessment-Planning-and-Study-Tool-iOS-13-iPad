@@ -38,7 +38,7 @@ class AddNewTaskViewController: UIViewController, UIPopoverPresentationControlle
         let currentDate = Date()
         
         /// Makes sure the task start date is atleast 1 miniute from now
-        /// Makes sure the task start date onlly goes upto the assessment due date
+        /// Makes sure the task start date onlly goes upto 30 minutes before the assessment due date
         var startDateComponent = DateComponents()
         startDateComponent.minute = 1
         let startDate = Calendar.current.date(byAdding: startDateComponent, to: currentDate)!
