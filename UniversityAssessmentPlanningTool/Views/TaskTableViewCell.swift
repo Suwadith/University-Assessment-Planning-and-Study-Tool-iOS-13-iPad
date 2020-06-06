@@ -45,7 +45,7 @@ class TaskTableViewCell: UITableViewCell {
         
         /// Remaining time to complete a given task (Linear progress bar)
         DispatchQueue.main.async {
-            let colours = self.colours.getProgressGradient(remainingDaysPercentage, negative: true)
+            let colours = self.colours.getProgressGradient(remainingDaysPercentage)
             self.taskDaysLeftBar.startGradientColor = colours[0]
             self.taskDaysLeftBar.endGradientColor = colours[1]
             self.taskDaysLeftBar.progress = CGFloat(remainingDaysPercentage) / 100

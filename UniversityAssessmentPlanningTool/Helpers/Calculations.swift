@@ -28,13 +28,14 @@ public class Calculations {
     public func getRemainingTimePercentage(_ start: Date, end: Date) -> Int {
         let elapsed = getTimeDiffInSeconds(start, end: end)
         let remaining = getTimeDiffInSeconds(now, end: end)
-        print(elapsed)
-        print(remaining)
+//        print(elapsed)
+//        print(remaining)
         var percentage = 100
         
         if elapsed > 0 {
-            percentage = Int(100 - ((remaining / elapsed) * 100))
+            percentage = Int(((remaining / elapsed) * 100))
         }
+//        print(percentage)
         return percentage
     }
     

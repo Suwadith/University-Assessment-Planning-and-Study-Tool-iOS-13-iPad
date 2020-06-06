@@ -69,7 +69,7 @@ class DetailViewController: UIViewController, NSFetchedResultsControllerDelegate
             
             /// Assessment Remaining Days Circular Progress Bar Generation
             DispatchQueue.main.async {
-                let colours = self.colours.getProgressGradient(daysLeftAsessment, negative: true)
+                let colours = self.colours.getProgressGradient(daysLeftAsessment)
                 self.assessmentDaysLeft?.customTitle = "\(daysRemaining)"
                 self.assessmentDaysLeft?.customSubtitle = "Days Left"
                 self.assessmentDaysLeft?.startGradientColor = colours[0]
