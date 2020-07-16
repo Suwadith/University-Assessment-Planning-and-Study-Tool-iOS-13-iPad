@@ -1,7 +1,7 @@
 # University-Assessment-Planning-and-Study-Tool-iOS-13-iPad
 An iOS 13 based Assessment and Task planning iPad app built to help students plan/keep track of university submissions.
 
-Lots of credit goes to [Brion Mario](https://github.com/brionmario) as most of the graphical components and logics were derived from his different variant of a similar iPad project he has done.
+Lots of credit goes to [**Brion Mario**](https://github.com/brionmario) as most of the graphical components and logics were derived from his different variant of a similar iPad project he has done.
 
 ## Functionalities of the application
 
